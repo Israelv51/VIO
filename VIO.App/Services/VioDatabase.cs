@@ -4,7 +4,7 @@ using VIO.App.Models;
 
 namespace VIO.App.Services;
 
-public class VioDatabase
+public partial class VioDatabase
 {
     private SQLiteAsyncConnection? _database;
 
@@ -22,6 +22,7 @@ public class VioDatabase
         await _database.CreateTableAsync<Education>();
         await _database.CreateTableAsync<WorkExperience>();
         await _database.CreateTableAsync<Skill>();
+        await _database.CreateTableAsync<VioDocument>();
     }
 
     public async Task<User?> GetUserByIdAsync(int id)
@@ -197,3 +198,4 @@ public class VioDatabase
         return await _database!.DeleteAsync(item);
     }
 }
+

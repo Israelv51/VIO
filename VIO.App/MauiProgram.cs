@@ -26,6 +26,7 @@ public static class MauiProgram
             });
 
         builder.Services.AddSingleton<VioDatabase>();
+        builder.Services.AddSingleton<DocumentStorageService>();
 
         builder.Services.AddSingleton<
             ISessionService,
@@ -41,6 +42,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ProfileViewModel>();
 
         builder.Services.AddTransient<CvViewModel>();
+        builder.Services.AddTransient<DocumentsViewModel>();
         builder.Services.AddTransient<ProfessionalProfileViewModel>();
         builder.Services.AddTransient<EducationViewModel>();
         builder.Services.AddTransient<ExperienceViewModel>();
@@ -67,3 +69,4 @@ public static class MauiProgram
         return builder.Build();
     }
 }
+

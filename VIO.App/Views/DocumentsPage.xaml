@@ -2,20 +2,22 @@
 
 <ContentPage
     x:Class="VIO.App.Views.DocumentsPage"
+    x:Name="Page"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-
+    xmlns:viewModels="clr-namespace:VIO.App.ViewModels"
+    xmlns:models="clr-namespace:VIO.App.Models"
+    x:DataType="viewModels:DocumentsViewModel"
     Shell.NavBarIsVisible="False"
     SafeAreaEdges="All"
     BackgroundColor="{StaticResource VioBackground}">
 
-    <Grid
-        RowDefinitions="*,Auto">
+    <Grid RowDefinitions="*,Auto">
 
         <ScrollView>
 
             <VerticalStackLayout
-                Padding="24,22,24,120"
+                Padding="24,22,24,110"
                 Spacing="14">
 
                 <Label
@@ -26,79 +28,57 @@
                     Text="Tus archivos importantes siempre contigo."
                     Style="{StaticResource VioBody}" />
 
-
                 <Border
-                    Margin="0,12,0,8"
-                    Padding="16,2"
+                    Margin="0,12,0,4"
+                    Padding="14,2"
                     HeightRequest="52"
                     BackgroundColor="#E9E9ED"
                     StrokeThickness="0"
                     StrokeShape="RoundRectangle 15">
 
-                    <Grid
-                        ColumnDefinitions="Auto,*"
-                        ColumnSpacing="10">
-
-                        <Label
-                            Text="⌕"
-                            FontSize="22"
-                            VerticalTextAlignment="Center"
-                            TextColor="{StaticResource VioTextTertiary}" />
-
-                        <Entry
-                            Grid.Column="1"
-                            Placeholder="Buscar documentos"
-                            BackgroundColor="Transparent"
-                            FontSize="15" />
-
-                    </Grid>
+                    <SearchBar
+                        Text="{Binding SearchText}"
+                        Placeholder="Buscar documentos"
+                        BackgroundColor="Transparent"
+                        FontSize="15" />
 
                 </Border>
 
-
                 <Label
-                    Text="Mis documentos"
-                    Margin="0,12,0,0"
-                    Style="{StaticResource VioSectionTitle}" />
+                    Text="{Binding Message}"
+                    FontSize="13"
+                    TextColor="{StaticResource VioBlue}" />
 
+                <ActivityIndicator
+                    IsVisible="{Binding IsBusy}"
+                    IsRunning="{Binding IsBusy}"
+                    Color="{StaticResource VioBlue}" />
 
                 <Border
-                    Margin="0,4,0,0"
-                    Padding="24"
+                    IsVisible="False"
+                    Padding="26"
                     BackgroundColor="White"
                     Stroke="{StaticResource VioBorder}"
                     StrokeShape="RoundRectangle 22">
 
                     <VerticalStackLayout
-                        Spacing="12"
-                        HorizontalOptions="Center">
+                        HorizontalOptions="Center"
+                        Spacing="10">
 
-                        <Border
-                            WidthRequest="64"
-                            HeightRequest="64"
-                            BackgroundColor="{StaticResource VioBlueSoft}"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 20">
-
-                            <Label
-                                Text="PDF"
-                                FontSize="15"
-                                FontAttributes="Bold"
-                                TextColor="{StaticResource VioBlue}"
-                                HorizontalTextAlignment="Center"
-                                VerticalTextAlignment="Center" />
-
-                        </Border>
+                        <Label
+                            Text="PDF"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource VioBlue}" />
 
                         <Label
                             Text="Aún no tienes documentos"
                             FontSize="17"
                             FontAttributes="Bold"
-                            TextColor="{StaticResource VioTextPrimary}"
-                            HorizontalTextAlignment="Center" />
+                            TextColor="{StaticResource VioTextPrimary}" />
 
                         <Label
-                            Text="Podrás subir PDFs, imágenes y documentos oficiales."
+                            Text="Agrega un PDF o una imagen para comenzar."
                             FontSize="13"
                             TextColor="{StaticResource VioTextSecondary}"
                             HorizontalTextAlignment="Center" />
@@ -107,17 +87,128 @@
 
                 </Border>
 
+                <CollectionView
+                    ItemsSource="{Binding Items}"
+                    SelectionMode="None">
+
+                    <CollectionView.ItemTemplate>
+
+                        <DataTemplate
+                            x:DataType="models:VioDocument">
+
+                            <Border
+                                Margin="0,5"
+                                Padding="16"
+                                BackgroundColor="White"
+                                Stroke="{StaticResource VioBorder}"
+                                StrokeShape="RoundRectangle 20">
+
+                                <Grid
+                                    ColumnDefinitions="Auto,*,Auto"
+                                    RowDefinitions="Auto,Auto"
+                                    ColumnSpacing="14">
+
+                                    <Border
+                                        Grid.RowSpan="2"
+                                        WidthRequest="48"
+                                        HeightRequest="48"
+                                        BackgroundColor="{StaticResource VioBlueSoft}"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 14">
+
+                                        <Label
+                                            Text="{Binding TypeLabel}"
+                                            FontSize="10"
+                                            FontAttributes="Bold"
+                                            TextColor="{StaticResource VioBlue}"
+                                            HorizontalTextAlignment="Center"
+                                            VerticalTextAlignment="Center" />
+
+                                    </Border>
+
+                                    <VerticalStackLayout
+                                        Grid.Column="1"
+                                        Spacing="3">
+
+                                        <Label
+                                            Text="{Binding DisplayName}"
+                                            FontSize="16"
+                                            FontAttributes="Bold"
+                                            LineBreakMode="TailTruncation"
+                                            TextColor="{StaticResource VioTextPrimary}" />
+
+                                        <Label
+                                            FontSize="12"
+                                            TextColor="{StaticResource VioTextSecondary}">
+
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding SizeText}" />
+                                                    <Span Text=" · " />
+                                                    <Span Text="{Binding DateText}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+
+                                        </Label>
+
+                                    </VerticalStackLayout>
+
+                                    <HorizontalStackLayout
+                                        Grid.Column="2"
+                                        Grid.RowSpan="2"
+                                        Spacing="4"
+                                        VerticalOptions="Center">
+
+                                        <Button
+                                            Text="Abrir"
+                                            FontSize="11"
+                                            Padding="10,5"
+                                            CornerRadius="10"
+                                            Command="{Binding Source={x:Reference Page}, Path=BindingContext.OpenDocumentCommand}"
+                                            CommandParameter="{Binding .}" />
+
+                                        <Button
+                                            Text="↑"
+                                            FontSize="15"
+                                            Padding="9,5"
+                                            CornerRadius="10"
+                                            Command="{Binding Source={x:Reference Page}, Path=BindingContext.ShareDocumentCommand}"
+                                            CommandParameter="{Binding .}" />
+
+                                        <Button
+                                            Text="×"
+                                            FontSize="16"
+                                            Padding="9,5"
+                                            CornerRadius="10"
+                                            BackgroundColor="#FFE5E5"
+                                            TextColor="{StaticResource VioError}"
+                                            Command="{Binding Source={x:Reference Page}, Path=BindingContext.DeleteDocumentCommand}"
+                                            CommandParameter="{Binding .}" />
+
+                                    </HorizontalStackLayout>
+
+                                </Grid>
+
+                            </Border>
+
+                        </DataTemplate>
+
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
             </VerticalStackLayout>
 
         </ScrollView>
 
-
         <Button
             Grid.Row="1"
-            Text="+  Agregar documento"
             Margin="24,10,24,18"
-            Style="{StaticResource VioPrimaryButton}" />
+            Text="+  Agregar documento"
+            Style="{StaticResource VioPrimaryButton}"
+            Command="{Binding AddDocumentCommand}" />
 
     </Grid>
 
 </ContentPage>
+
