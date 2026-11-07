@@ -1,17 +1,35 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using VIO.App.Constants;
+using VIO.App.Interfaces;
 
-namespace VIO.App
+namespace VIO.App;
+
+public partial class App : Application
 {
-    public partial class App : Application
-    {
-        public App()
-        {
-            InitializeComponent();
-        }
+    private readonly ISessionService _sessionService;
 
-        protected override Window CreateWindow(IActivationState? activationState)
+    public App(
+        ISessionService sessionService)
+    {
+        InitializeComponent();
+
+        _sessionService = sessionService;
+    }
+
+    protected override Window CreateWindow(
+        IActivationState? activationState)
+    {
+        var shell = new AppShell();
+
+        shell.Loaded += async (_, _) =>
         {
-            return new Window(new AppShell());
-        }
+            var initialRoute =
+                _sessionService.IsAuthenticated
+                    ? AppRoutes.Home
+                    : AppRoutes.Login;
+
+            await shell.GoToAsync(initialRoute);
+        };
+
+        return new Window(shell);
     }
 }

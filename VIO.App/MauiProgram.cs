@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using VIO.App.Interfaces;
 using VIO.App.Services;
+using VIO.App.ViewModels;
+using VIO.App.Views;
 
 namespace VIO.App;
 
@@ -32,6 +34,24 @@ public static class MauiProgram
         builder.Services.AddSingleton<
             IAuthService,
             AuthService>();
+
+        builder.Services.AddTransient<
+            LoginViewModel>();
+
+        builder.Services.AddTransient<
+            RegisterViewModel>();
+
+        builder.Services.AddTransient<
+            HomeViewModel>();
+
+        builder.Services.AddTransient<
+            LoginPage>();
+
+        builder.Services.AddTransient<
+            RegisterPage>();
+
+        builder.Services.AddTransient<
+            HomePage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

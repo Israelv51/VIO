@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="VIO.App.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:VIO.App.ViewModels"
+    x:DataType="viewModels:HomeViewModel"
+    Shell.NavBarIsVisible="False"
+    SafeAreaEdges="All"
+    BackgroundColor="#F5F5F7">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="24,24,24,36"
+            Spacing="18">
+
+            <Grid
+                ColumnDefinitions="*,Auto">
+
+                <VerticalStackLayout Spacing="2">
+
+                    <Label
+                        Text="VIO"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="#0A84FF" />
+
+                    <Label
+                        Text="{Binding Greeting}"
+                        FontSize="30"
+                        FontAttributes="Bold"
+                        TextColor="#1D1D1F" />
+
+                    <Label
+                        Text="{Binding Email}"
+                        FontSize="13"
+                        TextColor="#8E8E93" />
+
+                </VerticalStackLayout>
+
+                <Border
+                    Grid.Column="1"
+                    WidthRequest="52"
+                    HeightRequest="52"
+                    BackgroundColor="#E5F2FF"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 26">
+
+                    <Label
+                        Text="👤"
+                        FontSize="24"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center" />
+
+                </Border>
+
+            </Grid>
+
+            <Border
+                Margin="0,14,0,0"
+                Padding="22"
+                BackgroundColor="#0A84FF"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 24">
+
+                <VerticalStackLayout Spacing="8">
+
+                    <Label
+                        Text="Tu identidad profesional"
+                        FontSize="13"
+                        TextColor="#D9EEFF" />
+
+                    <Label
+                        Text="Construye un perfil que hable por ti."
+                        FontSize="23"
+                        FontAttributes="Bold"
+                        TextColor="White" />
+
+                    <Label
+                        Text="Agrega estudios, experiencia, habilidades, documentos y certificaciones."
+                        FontSize="14"
+                        TextColor="#EAF5FF" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <Label
+                Text="Tu espacio"
+                Margin="0,12,0,0"
+                FontSize="20"
+                FontAttributes="Bold"
+                TextColor="#1D1D1F" />
+
+            <Grid
+                ColumnDefinitions="*,*"
+                RowDefinitions="Auto,Auto"
+                ColumnSpacing="12"
+                RowSpacing="12">
+
+                <Border
+                    Padding="18"
+                    BackgroundColor="White"
+                    Stroke="#EBEBF0"
+                    StrokeShape="RoundRectangle 20">
+
+                    <VerticalStackLayout Spacing="8">
+
+                        <Label Text="👤" FontSize="26" />
+
+                        <Label
+                            Text="Mi perfil"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            TextColor="#1D1D1F" />
+
+                        <Label
+                            Text="Información profesional"
+                            FontSize="12"
+                            TextColor="#8E8E93" />
+
+                    </VerticalStackLayout>
+
+                </Border>
+
+                <Border
+                    Grid.Column="1"
+                    Padding="18"
+                    BackgroundColor="White"
+                    Stroke="#EBEBF0"
+                    StrokeShape="RoundRectangle 20">
+
+                    <VerticalStackLayout Spacing="8">
+
+                        <Label Text="📄" FontSize="26" />
+
+                        <Label
+                            Text="Documentos"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            TextColor="#1D1D1F" />
+
+                        <Label
+                            Text="PDF e imágenes"
+                            FontSize="12"
+                            TextColor="#8E8E93" />
+
+                    </VerticalStackLayout>
+
+                </Border>
+
+                <Border
+                    Grid.Row="1"
+                    Padding="18"
+                    BackgroundColor="White"
+                    Stroke="#EBEBF0"
+                    StrokeShape="RoundRectangle 20">
+
+                    <VerticalStackLayout Spacing="8">
+
+                        <Label Text="🎓" FontSize="26" />
+
+                        <Label
+                            Text="Certificaciones"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            TextColor="#1D1D1F" />
+
+                        <Label
+                            Text="Tus logros"
+                            FontSize="12"
+                            TextColor="#8E8E93" />
+
+                    </VerticalStackLayout>
+
+                </Border>
+
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Padding="18"
+                    BackgroundColor="White"
+                    Stroke="#EBEBF0"
+                    StrokeShape="RoundRectangle 20">
+
+                    <VerticalStackLayout Spacing="8">
+
+                        <Label Text="💼" FontSize="26" />
+
+                        <Label
+                            Text="Portafolio"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            TextColor="#1D1D1F" />
+
+                        <Label
+                            Text="Proyectos y experiencia"
+                            FontSize="12"
+                            TextColor="#8E8E93" />
+
+                    </VerticalStackLayout>
+
+                </Border>
+
+            </Grid>
+
+            <Button
+                Text="Cerrar sesión"
+                Margin="0,24,0,0"
+                HeightRequest="50"
+                CornerRadius="15"
+                BackgroundColor="#E5E5EA"
+                TextColor="#FF3B30"
+                FontAttributes="Bold"
+                Command="{Binding LogoutCommand}" />
+
+            <Label
+                Text="VIO · Verified Identity &amp; Opportunities"
+                Margin="0,12,0,0"
+                FontSize="11"
+                TextColor="#AEAEB2"
+                HorizontalTextAlignment="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

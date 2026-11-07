@@ -1,14 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="VIO.App.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:VIO.App"
-    Title="VIO.App">
+    xmlns:views="clr-namespace:VIO.App.Views"
+    Shell.FlyoutBehavior="Disabled"
+    BackgroundColor="#F5F5F7">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Route="login"
+        ContentTemplate="{DataTemplate views:LoginPage}" />
+
+    <ShellContent
+        Route="home"
+        ContentTemplate="{DataTemplate views:HomePage}" />
 
 </Shell>

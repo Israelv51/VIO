@@ -1,10 +1,16 @@
-﻿namespace VIO.App
+﻿using VIO.App.Constants;
+using VIO.App.Views;
+
+namespace VIO.App;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+
+        Routing.RegisterRoute(
+            AppRoutes.Register,
+            typeof(RegisterPage));
     }
 }

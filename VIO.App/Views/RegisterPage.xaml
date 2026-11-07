@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="VIO.App.Views.RegisterPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:VIO.App.ViewModels"
+    x:DataType="viewModels:RegisterViewModel"
+    Shell.NavBarIsVisible="False"
+    SafeAreaEdges="All"
+    BackgroundColor="#F5F5F7">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="28,28,28,36"
+            Spacing="0">
+
+            <Label
+                Text="‹"
+                FontSize="40"
+                TextColor="#0A84FF"
+                WidthRequest="50">
+
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding GoToLoginCommand}" />
+                </Label.GestureRecognizers>
+
+            </Label>
+
+            <Label
+                Text="Crea tu identidad"
+                Margin="0,20,0,0"
+                FontSize="32"
+                FontAttributes="Bold"
+                TextColor="#1D1D1F" />
+
+            <Label
+                Text="Empieza a construir tu perfil profesional en VIO."
+                Margin="0,8,0,30"
+                FontSize="15"
+                TextColor="#6E6E73" />
+
+            <Label
+                Text="Nombre completo"
+                FontSize="13"
+                FontAttributes="Bold"
+                TextColor="#3A3A3C" />
+
+            <Border
+                Margin="0,8,0,16"
+                Padding="16,4"
+                HeightRequest="56"
+                BackgroundColor="White"
+                Stroke="#E5E5EA"
+                StrokeShape="RoundRectangle 16">
+
+                <Entry
+                    Text="{Binding Name}"
+                    Placeholder="Tu nombre"
+                    ReturnType="Next"
+                    FontSize="16" />
+
+            </Border>
+
+            <Label
+                Text="Correo electrónico"
+                FontSize="13"
+                FontAttributes="Bold"
+                TextColor="#3A3A3C" />
+
+            <Border
+                Margin="0,8,0,16"
+                Padding="16,4"
+                HeightRequest="56"
+                BackgroundColor="White"
+                Stroke="#E5E5EA"
+                StrokeShape="RoundRectangle 16">
+
+                <Entry
+                    Text="{Binding Email}"
+                    Placeholder="nombre@correo.com"
+                    Keyboard="Email"
+                    ReturnType="Next"
+                    FontSize="16" />
+
+            </Border>
+
+            <Label
+                Text="Contraseña"
+                FontSize="13"
+                FontAttributes="Bold"
+                TextColor="#3A3A3C" />
+
+            <Border
+                Margin="0,8,0,16"
+                Padding="16,4"
+                HeightRequest="56"
+                BackgroundColor="White"
+                Stroke="#E5E5EA"
+                StrokeShape="RoundRectangle 16">
+
+                <Entry
+                    Text="{Binding Password}"
+                    Placeholder="Mínimo 8 caracteres"
+                    IsPassword="True"
+                    ReturnType="Next"
+                    FontSize="16" />
+
+            </Border>
+
+            <Label
+                Text="Confirmar contraseña"
+                FontSize="13"
+                FontAttributes="Bold"
+                TextColor="#3A3A3C" />
+
+            <Border
+                Margin="0,8,0,8"
+                Padding="16,4"
+                HeightRequest="56"
+                BackgroundColor="White"
+                Stroke="#E5E5EA"
+                StrokeShape="RoundRectangle 16">
+
+                <Entry
+                    Text="{Binding ConfirmPassword}"
+                    Placeholder="Repite tu contraseña"
+                    IsPassword="True"
+                    ReturnType="Go"
+                    FontSize="16" />
+
+            </Border>
+
+            <Label
+                Text="{Binding ErrorMessage}"
+                Margin="2,4,2,8"
+                FontSize="13"
+                TextColor="#FF3B30" />
+
+            <Label
+                Text="Usa al menos 8 caracteres, una mayúscula, una minúscula y un número."
+                Margin="2,2,2,16"
+                FontSize="12"
+                TextColor="#8E8E93" />
+
+            <Button
+                Text="Crear cuenta"
+                HeightRequest="54"
+                CornerRadius="16"
+                BackgroundColor="#0A84FF"
+                TextColor="White"
+                FontSize="16"
+                FontAttributes="Bold"
+                Command="{Binding RegisterCommand}" />
+
+            <ActivityIndicator
+                Margin="0,12"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                Color="#0A84FF" />
+
+            <Label
+                Text="Al crear una cuenta podrás administrar tu perfil, documentos y trayectoria profesional."
+                Margin="10,22,10,0"
+                FontSize="12"
+                TextColor="#8E8E93"
+                HorizontalTextAlignment="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

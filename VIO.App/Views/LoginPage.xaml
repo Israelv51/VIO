@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="VIO.App.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:VIO.App.ViewModels"
+    x:DataType="viewModels:LoginViewModel"
+    Shell.NavBarIsVisible="False"
+    SafeAreaEdges="All"
+    BackgroundColor="#F5F5F7">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="28,40,28,30"
+            Spacing="0">
+
+            <Border
+                WidthRequest="76"
+                HeightRequest="76"
+                HorizontalOptions="Center"
+                BackgroundColor="#0A84FF"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 22">
+
+                <Label
+                    Text="V"
+                    TextColor="White"
+                    FontSize="38"
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center" />
+
+            </Border>
+
+            <Label
+                Text="VIO"
+                Margin="0,22,0,0"
+                FontSize="38"
+                FontAttributes="Bold"
+                TextColor="#1D1D1F"
+                HorizontalTextAlignment="Center" />
+
+            <Label
+                Text="Verified Identity &amp; Opportunities"
+                Margin="0,4,0,0"
+                FontSize="14"
+                TextColor="#6E6E73"
+                HorizontalTextAlignment="Center" />
+
+            <Label
+                Text="Bienvenido"
+                Margin="0,48,0,0"
+                FontSize="28"
+                FontAttributes="Bold"
+                TextColor="#1D1D1F" />
+
+            <Label
+                Text="Inicia sesión para continuar con tu identidad profesional."
+                Margin="0,8,0,26"
+                FontSize="15"
+                TextColor="#6E6E73" />
+
+            <Label
+                Text="Correo electrónico"
+                FontSize="13"
+                FontAttributes="Bold"
+                TextColor="#3A3A3C" />
+
+            <Border
+                Margin="0,8,0,18"
+                Padding="16,4"
+                HeightRequest="56"
+                BackgroundColor="White"
+                Stroke="#E5E5EA"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 16">
+
+                <Entry
+                    Text="{Binding Email}"
+                    Placeholder="nombre@correo.com"
+                    Keyboard="Email"
+                    ReturnType="Next"
+                    FontSize="16"
+                    TextColor="#1D1D1F"
+                    PlaceholderColor="#AEAEB2" />
+
+            </Border>
+
+            <Label
+                Text="Contraseña"
+                FontSize="13"
+                FontAttributes="Bold"
+                TextColor="#3A3A3C" />
+
+            <Border
+                Margin="0,8,0,8"
+                Padding="16,4"
+                HeightRequest="56"
+                BackgroundColor="White"
+                Stroke="#E5E5EA"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 16">
+
+                <Entry
+                    Text="{Binding Password}"
+                    Placeholder="Tu contraseña"
+                    IsPassword="True"
+                    ReturnType="Go"
+                    FontSize="16"
+                    TextColor="#1D1D1F"
+                    PlaceholderColor="#AEAEB2" />
+
+            </Border>
+
+            <Label
+                Text="{Binding ErrorMessage}"
+                Margin="2,4,2,8"
+                FontSize="13"
+                TextColor="#FF3B30" />
+
+            <Button
+                Text="Iniciar sesión"
+                Margin="0,8,0,0"
+                HeightRequest="54"
+                CornerRadius="16"
+                BackgroundColor="#0A84FF"
+                TextColor="White"
+                FontSize="16"
+                FontAttributes="Bold"
+                Command="{Binding LoginCommand}" />
+
+            <ActivityIndicator
+                Margin="0,12,0,0"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                Color="#0A84FF" />
+
+            <HorizontalStackLayout
+                Margin="0,28,0,0"
+                HorizontalOptions="Center"
+                Spacing="5">
+
+                <Label
+                    Text="¿Aún no tienes cuenta?"
+                    FontSize="14"
+                    TextColor="#6E6E73" />
+
+                <Label
+                    Text="Crear cuenta"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="#0A84FF">
+
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding GoToRegisterCommand}" />
+                    </Label.GestureRecognizers>
+
+                </Label>
+
+            </HorizontalStackLayout>
+
+            <Label
+                Text="Tu trayectoria. Tu identidad."
+                Margin="0,38,0,0"
+                FontSize="12"
+                TextColor="#AEAEB2"
+                HorizontalTextAlignment="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
