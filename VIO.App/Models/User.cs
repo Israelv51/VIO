@@ -20,6 +20,10 @@ public class User
     [NotNull]
     public string PasswordSalt { get; set; } = string.Empty;
 
+    public int PasswordIterations { get; set; } = 600000;
+
+    public string PasswordAlgorithm { get; set; } = "PBKDF2-HMAC-SHA256";
+
     public string? ProfilePhotoPath { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
