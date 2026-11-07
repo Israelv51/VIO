@@ -22,12 +22,13 @@ public partial class App : Application
 
         shell.Loaded += async (_, _) =>
         {
-            var initialRoute =
-                _sessionService.IsAuthenticated
-                    ? AppRoutes.Home
-                    : AppRoutes.Login;
+            // Durante el desarrollo y la exposición,
+            // VIO siempre inicia mostrando Login.
+            // Las cuentas guardadas en SQLite NO se eliminan.
+            _sessionService.End();
 
-            await shell.GoToAsync(initialRoute);
+            await shell.GoToAsync(
+                AppRoutes.Login);
         };
 
         return new Window(shell);

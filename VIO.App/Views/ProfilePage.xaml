@@ -4,6 +4,8 @@
     x:Class="VIO.App.Views.ProfilePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:VIO.App.ViewModels"
+    x:DataType="viewModels:ProfileViewModel"
 
     Shell.NavBarIsVisible="False"
     SafeAreaEdges="All"
@@ -43,14 +45,14 @@
                 </Border>
 
                 <Label
-                    Text="Tu perfil VIO"
+                    Text="{Binding Name}"
                     FontSize="21"
                     FontAttributes="Bold"
                     TextColor="{StaticResource VioTextPrimary}"
                     HorizontalTextAlignment="Center" />
 
                 <Label
-                    Text="Identidad profesional"
+                    Text="{Binding Email}"
                     FontSize="14"
                     TextColor="{StaticResource VioTextSecondary}"
                     HorizontalTextAlignment="Center" />
@@ -66,8 +68,9 @@
 
                 <VerticalStackLayout>
 
-                    <Grid Padding="18"
-                          ColumnDefinitions="*,Auto">
+                    <Grid
+                        Padding="18"
+                        ColumnDefinitions="*,Auto">
 
                         <Label
                             Text="Editar perfil"
@@ -87,8 +90,9 @@
                         HeightRequest="1"
                         BackgroundColor="{StaticResource VioBorder}" />
 
-                    <Grid Padding="18"
-                          ColumnDefinitions="*,Auto">
+                    <Grid
+                        Padding="18"
+                        ColumnDefinitions="*,Auto">
 
                         <Label
                             Text="Seguridad"
@@ -108,8 +112,9 @@
                         HeightRequest="1"
                         BackgroundColor="{StaticResource VioBorder}" />
 
-                    <Grid Padding="18"
-                          ColumnDefinitions="*,Auto">
+                    <Grid
+                        Padding="18"
+                        ColumnDefinitions="*,Auto">
 
                         <Label
                             Text="Notificaciones"
@@ -127,6 +132,26 @@
                 </VerticalStackLayout>
 
             </Border>
+
+
+            <Button
+                Text="Cerrar sesión"
+                Margin="0,18,0,0"
+                HeightRequest="52"
+                CornerRadius="16"
+                BackgroundColor="#FFE5E5"
+                TextColor="{StaticResource VioError}"
+                FontSize="16"
+                FontAttributes="Bold"
+                Command="{Binding LogoutCommand}" />
+
+
+            <Label
+                Text="VIO · Verified Identity &amp; Opportunities"
+                Margin="0,18,0,0"
+                FontSize="11"
+                TextColor="{StaticResource VioTextTertiary}"
+                HorizontalTextAlignment="Center" />
 
         </VerticalStackLayout>
 
