@@ -15,4 +15,6 @@ public static class AppRoutes
     public const string Education = "education";
     public const string Experience = "experience";
     public const string Skills = "skills";
+
+    public const string DocumentScanner = "document-scanner";
 }

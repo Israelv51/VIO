@@ -32,5 +32,9 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(
             AppRoutes.Skills,
             typeof(SkillsPage));
+
+        Routing.RegisterRoute(
+            AppRoutes.DocumentScanner,
+            typeof(DocumentScannerPage));
     }
 }

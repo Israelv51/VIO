@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 using VIO.App.Interfaces;
 using VIO.App.Services;
 using VIO.App.ViewModels;
@@ -14,6 +15,7 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
+            .UseMauiCommunityToolkitCamera()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont(
@@ -25,8 +27,8 @@ public static class MauiProgram
                     "OpenSansSemibold");
             });
 
+        // Servicios
         builder.Services.AddSingleton<VioDatabase>();
-        builder.Services.AddSingleton<DocumentStorageService>();
 
         builder.Services.AddSingleton<
             ISessionService,
@@ -36,6 +38,13 @@ public static class MauiProgram
             IAuthService,
             AuthService>();
 
+        builder.Services.AddSingleton<
+            DocumentStorageService>();
+
+        builder.Services.AddSingleton<
+            PdfDocumentService>();
+
+        // ViewModels
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<RegisterViewModel>();
         builder.Services.AddTransient<HomeViewModel>();
@@ -48,6 +57,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ExperienceViewModel>();
         builder.Services.AddTransient<SkillsViewModel>();
 
+        // Páginas
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<RegisterPage>();
         builder.Services.AddTransient<HomePage>();
@@ -62,6 +72,8 @@ public static class MauiProgram
         builder.Services.AddTransient<ExperiencePage>();
         builder.Services.AddTransient<SkillsPage>();
 
+        builder.Services.AddTransient<DocumentScannerPage>();
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
@@ -69,4 +81,3 @@ public static class MauiProgram
         return builder.Build();
     }
 }
-

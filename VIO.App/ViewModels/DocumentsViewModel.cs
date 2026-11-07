@@ -12,6 +12,7 @@ public partial class DocumentsViewModel : ObservableObject
     private readonly ISessionService _session;
     private readonly VioDatabase _database;
     private readonly DocumentStorageService _storage;
+    private readonly PdfDocumentService _pdfService;
 
     public ObservableCollection<VioDocument> Items { get; }
         = [];
@@ -19,11 +20,13 @@ public partial class DocumentsViewModel : ObservableObject
     public DocumentsViewModel(
         ISessionService session,
         VioDatabase database,
-        DocumentStorageService storage)
+        DocumentStorageService storage,
+        PdfDocumentService pdfService)
     {
         _session = session;
         _database = database;
         _storage = storage;
+        _pdfService = pdfService;
     }
 
     [ObservableProperty]
@@ -96,8 +99,96 @@ public partial class DocumentsViewModel : ObservableObject
         }
         catch (Exception ex)
         {
+            Message = ex.Message;
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task CreatePdfFromPhotosAsync()
+    {
+        if (IsBusy ||
+            _session.CurrentUserId is not int userId)
+        {
+            return;
+        }
+
+        try
+        {
+            IsBusy = true;
             Message =
-                ex.Message;
+                "Selecciona las imágenes en el orden de las páginas.";
+
+            var document =
+                await _pdfService.CreateFromPhotosAsync(
+                    userId);
+
+            if (document is null)
+            {
+                Message =
+                    "Operación cancelada.";
+                return;
+            }
+
+            await _database.AddDocumentAsync(
+                document);
+
+            await LoadAsync();
+
+            Message =
+                "PDF creado correctamente.";
+        }
+        catch (Exception ex)
+        {
+            Message = ex.Message;
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task ScanTwoSidedAsync()
+    {
+        if (IsBusy ||
+            _session.CurrentUserId is not int userId)
+        {
+            return;
+        }
+
+        try
+        {
+            IsBusy = true;
+
+            Message =
+                "Primero fotografía el frente y después el reverso.";
+
+            var document =
+                await _pdfService.CaptureTwoSidedAsync(
+                    userId);
+
+            if (document is null)
+            {
+                Message =
+                    "Captura cancelada.";
+                return;
+            }
+
+            await _database.AddDocumentAsync(
+                document);
+
+            await LoadAsync();
+
+            Message =
+                "Documento doble cara creado correctamente.";
+        }
+        catch (Exception ex)
+        {
+            Message = ex.Message;
         }
         finally
         {

@@ -201,14 +201,46 @@
 
         </ScrollView>
 
-        <Button
+        <VerticalStackLayout
             Grid.Row="1"
-            Margin="24,10,24,18"
-            Text="+  Agregar documento"
-            Style="{StaticResource VioPrimaryButton}"
-            Command="{Binding AddDocumentCommand}" />
+            Margin="24,8,24,18"
+            Spacing="8">
+
+            <Grid
+                ColumnDefinitions="*,*"
+                ColumnSpacing="8">
+
+                <Button
+                    Text="Fotos → PDF"
+                    HeightRequest="50"
+                    CornerRadius="15"
+                    BackgroundColor="White"
+                    BorderColor="{StaticResource VioBlue}"
+                    BorderWidth="1"
+                    TextColor="{StaticResource VioBlue}"
+                    Command="{Binding CreatePdfFromPhotosCommand}" />
+
+                <Button
+                    Grid.Column="1"
+                    Text="Escanear doble cara"
+                    HeightRequest="50"
+                    CornerRadius="15"
+                    BackgroundColor="{StaticResource VioBlueSoft}"
+                    TextColor="{StaticResource VioBlue}"
+                    Command="{Binding OpenScannerCommand}" />
+
+            </Grid>
+
+            <Button
+                Text="+  Agregar documento"
+                Style="{StaticResource VioPrimaryButton}"
+                Command="{Binding AddDocumentCommand}" />
+
+        </VerticalStackLayout>
 
     </Grid>
 
 </ContentPage>
+
+
 

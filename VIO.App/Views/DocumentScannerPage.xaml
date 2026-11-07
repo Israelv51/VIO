@@ -1,0 +1,424 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="VIO.App.Views.DocumentScannerPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Shell.NavBarIsVisible="False"
+    SafeAreaEdges="All"
+    BackgroundColor="Black">
+
+    <Grid>
+
+        <!-- Cámara -->
+        <toolkit:CameraView
+            x:Name="Camera"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill" />
+
+        <!-- Oscurecimiento superior -->
+        <BoxView
+            HeightRequest="120"
+            VerticalOptions="Start"
+            BackgroundColor="#B3000000" />
+
+        <!-- Oscurecimiento inferior -->
+        <BoxView
+            HeightRequest="220"
+            VerticalOptions="End"
+            BackgroundColor="#D9000000" />
+
+        <!-- Barra superior -->
+        <Grid
+            Padding="18,12"
+            ColumnDefinitions="54,*,54"
+            VerticalOptions="Start">
+
+            <Button
+                Grid.Column="0"
+                Text="×"
+                WidthRequest="44"
+                HeightRequest="44"
+                CornerRadius="22"
+                FontSize="26"
+                Padding="0"
+                BackgroundColor="#551D1D1F"
+                TextColor="White"
+                Clicked="OnCloseClicked" />
+
+            <Border
+                Grid.Column="1"
+                Padding="16,9"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                BackgroundColor="#CC1D1D1F"
+                Stroke="#22FFFFFF"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 18">
+
+                <HorizontalStackLayout
+                    Spacing="7">
+
+                    <Border
+                        WidthRequest="9"
+                        HeightRequest="9"
+                        BackgroundColor="#0A84FF"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 5" />
+
+                    <Label
+                        Text="VIO SCAN"
+                        FontSize="13"
+                        CharacterSpacing="1.2"
+                        FontAttributes="Bold"
+                        TextColor="White" />
+
+                </HorizontalStackLayout>
+
+            </Border>
+
+            <Button
+                x:Name="FlashButton"
+                Grid.Column="2"
+                Text="⚡"
+                WidthRequest="44"
+                HeightRequest="44"
+                CornerRadius="22"
+                FontSize="18"
+                Padding="0"
+                BackgroundColor="#551D1D1F"
+                TextColor="White"
+                Clicked="OnFlashClicked" />
+
+        </Grid>
+
+        <!-- Zona central -->
+        <VerticalStackLayout
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Spacing="18"
+            Margin="20">
+
+            <!-- Progreso -->
+            <Border
+                Padding="13,7"
+                HorizontalOptions="Center"
+                BackgroundColor="#CC1D1D1F"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 20">
+
+                <HorizontalStackLayout
+                    Spacing="8">
+
+                    <Border
+                        x:Name="FrontDot"
+                        WidthRequest="22"
+                        HeightRequest="7"
+                        BackgroundColor="#0A84FF"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 4" />
+
+                    <Border
+                        x:Name="BackDot"
+                        WidthRequest="7"
+                        HeightRequest="7"
+                        BackgroundColor="#6E6E73"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 4" />
+
+                    <Label
+                        x:Name="StepLabel"
+                        Text="FRENTE · 1 DE 2"
+                        Margin="4,0,0,0"
+                        FontSize="11"
+                        FontAttributes="Bold"
+                        CharacterSpacing="0.8"
+                        TextColor="White" />
+
+                </HorizontalStackLayout>
+
+            </Border>
+
+            <!-- Marco -->
+            <Border
+                x:Name="DocumentFrame"
+                WidthRequest="340"
+                HeightRequest="216"
+                BackgroundColor="#08000000"
+                Stroke="#0A84FF"
+                StrokeThickness="2.5"
+                StrokeShape="RoundRectangle 22">
+
+                <Grid>
+
+                    <Label
+                        x:Name="SideLabel"
+                        Text="FRENTE"
+                        FontSize="18"
+                        CharacterSpacing="2"
+                        FontAttributes="Bold"
+                        TextColor="#77FFFFFF"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center" />
+
+                    <!-- Línea superior -->
+                    <BoxView
+                        WidthRequest="58"
+                        HeightRequest="4"
+                        Margin="18"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start"
+                        BackgroundColor="#0A84FF" />
+
+                    <!-- Línea izquierda -->
+                    <BoxView
+                        WidthRequest="4"
+                        HeightRequest="58"
+                        Margin="18"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start"
+                        BackgroundColor="#0A84FF" />
+
+                    <!-- Línea superior derecha -->
+                    <BoxView
+                        WidthRequest="58"
+                        HeightRequest="4"
+                        Margin="18"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        BackgroundColor="#0A84FF" />
+
+                    <BoxView
+                        WidthRequest="4"
+                        HeightRequest="58"
+                        Margin="18"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        BackgroundColor="#0A84FF" />
+
+                    <!-- Inferior izquierda -->
+                    <BoxView
+                        WidthRequest="58"
+                        HeightRequest="4"
+                        Margin="18"
+                        HorizontalOptions="Start"
+                        VerticalOptions="End"
+                        BackgroundColor="#0A84FF" />
+
+                    <BoxView
+                        WidthRequest="4"
+                        HeightRequest="58"
+                        Margin="18"
+                        HorizontalOptions="Start"
+                        VerticalOptions="End"
+                        BackgroundColor="#0A84FF" />
+
+                    <!-- Inferior derecha -->
+                    <BoxView
+                        WidthRequest="58"
+                        HeightRequest="4"
+                        Margin="18"
+                        HorizontalOptions="End"
+                        VerticalOptions="End"
+                        BackgroundColor="#0A84FF" />
+
+                    <BoxView
+                        WidthRequest="4"
+                        HeightRequest="58"
+                        Margin="18"
+                        HorizontalOptions="End"
+                        VerticalOptions="End"
+                        BackgroundColor="#0A84FF" />
+
+                </Grid>
+
+            </Border>
+
+            <!-- Instrucciones -->
+            <Border
+                Padding="18,13"
+                Margin="8,0"
+                BackgroundColor="#D91D1D1F"
+                Stroke="#22FFFFFF"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 20">
+
+                <VerticalStackLayout
+                    Spacing="4">
+
+                    <Label
+                        x:Name="TitleLabel"
+                        Text="Escanea el frente"
+                        FontSize="17"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        HorizontalTextAlignment="Center" />
+
+                    <Label
+                        x:Name="InstructionLabel"
+                        Text="Coloca todo el documento dentro del marco y evita reflejos."
+                        FontSize="13"
+                        TextColor="#D1D1D6"
+                        HorizontalTextAlignment="Center" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+        </VerticalStackLayout>
+
+        <!-- Controles inferiores -->
+        <Grid
+            Padding="28,16,28,24"
+            ColumnDefinitions="*,100,*"
+            VerticalOptions="End">
+
+            <Button
+                x:Name="ResetButton"
+                Grid.Column="0"
+                Text="Repetir"
+                IsVisible="False"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                BackgroundColor="Transparent"
+                TextColor="#D1D1D6"
+                FontSize="14"
+                Clicked="OnResetClicked" />
+
+            <!-- Botón cámara estilo iOS -->
+            <Border
+                Grid.Column="1"
+                WidthRequest="86"
+                HeightRequest="86"
+                Stroke="White"
+                StrokeThickness="4"
+                BackgroundColor="Transparent"
+                StrokeShape="RoundRectangle 43">
+
+                <Button
+                    x:Name="CaptureButton"
+                    Margin="7"
+                    Text=""
+                    CornerRadius="35"
+                    BackgroundColor="White"
+                    Clicked="OnCaptureClicked" />
+
+            </Border>
+
+            <Label
+                Grid.Column="2"
+                Text="AUTO"
+                HorizontalOptions="End"
+                VerticalOptions="Center"
+                FontSize="11"
+                FontAttributes="Bold"
+                TextColor="#8E8E93" />
+
+        </Grid>
+
+        <!-- Mensaje VOLTEA -->
+        <Border
+            x:Name="FlipCard"
+            IsVisible="False"
+            Opacity="0"
+            Padding="26,22"
+            WidthRequest="300"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            BackgroundColor="#F7F7F9"
+            Stroke="#E5E5EA"
+            StrokeThickness="1"
+            StrokeShape="RoundRectangle 28">
+
+            <VerticalStackLayout
+                Spacing="10"
+                HorizontalOptions="Center">
+
+                <Border
+                    WidthRequest="58"
+                    HeightRequest="58"
+                    BackgroundColor="#EAF4FF"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 29">
+
+                    <Label
+                        Text="↻"
+                        FontSize="32"
+                        TextColor="#0A84FF"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center" />
+
+                </Border>
+
+                <Label
+                    Text="Frente capturado"
+                    FontSize="19"
+                    FontAttributes="Bold"
+                    TextColor="#1D1D1F"
+                    HorizontalTextAlignment="Center" />
+
+                <Label
+                    Text="Ahora voltea el documento"
+                    FontSize="15"
+                    TextColor="#6E6E73"
+                    HorizontalTextAlignment="Center" />
+
+            </VerticalStackLayout>
+
+        </Border>
+
+        <!-- Pantallazo de captura -->
+        <BoxView
+            x:Name="FlashOverlay"
+            InputTransparent="True"
+            BackgroundColor="White"
+            Opacity="0" />
+
+        <!-- Procesando -->
+        <Grid
+            x:Name="ProcessingOverlay"
+            IsVisible="False"
+            BackgroundColor="#E6000000">
+
+            <Border
+                Padding="28"
+                Margin="30"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                BackgroundColor="#F7F7F9"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 28">
+
+                <VerticalStackLayout
+                    Spacing="14"
+                    HorizontalOptions="Center">
+
+                    <ActivityIndicator
+                        IsRunning="True"
+                        Color="#0A84FF"
+                        WidthRequest="34"
+                        HeightRequest="34" />
+
+                    <Label
+                        Text="Creando documento"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="#1D1D1F"
+                        HorizontalTextAlignment="Center" />
+
+                    <Label
+                        Text="VIO está uniendo ambas caras en un PDF."
+                        FontSize="13"
+                        TextColor="#6E6E73"
+                        HorizontalTextAlignment="Center" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
