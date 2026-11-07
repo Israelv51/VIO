@@ -25,6 +25,7 @@ public static class MauiProgram
                     "OpenSansSemibold");
             });
 
+        // Base de datos y servicios
         builder.Services.AddSingleton<VioDatabase>();
 
         builder.Services.AddSingleton<
@@ -35,23 +36,22 @@ public static class MauiProgram
             IAuthService,
             AuthService>();
 
-        builder.Services.AddTransient<
-            LoginViewModel>();
+        // ViewModels
+        builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddTransient<RegisterViewModel>();
+        builder.Services.AddTransient<HomeViewModel>();
+        builder.Services.AddTransient<ProfileViewModel>();
 
-        builder.Services.AddTransient<
-            RegisterViewModel>();
+        // Páginas con ViewModel
+        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<RegisterPage>();
+        builder.Services.AddTransient<HomePage>();
+        builder.Services.AddTransient<ProfilePage>();
 
-        builder.Services.AddTransient<
-            HomeViewModel>();
-
-        builder.Services.AddTransient<
-            LoginPage>();
-
-        builder.Services.AddTransient<
-            RegisterPage>();
-
-        builder.Services.AddTransient<
-            HomePage>();
+        // Páginas simples
+        builder.Services.AddTransient<CvPage>();
+        builder.Services.AddTransient<DocumentsPage>();
+        builder.Services.AddTransient<CertificationsPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();
@@ -60,4 +60,3 @@ public static class MauiProgram
         return builder.Build();
     }
 }
-
