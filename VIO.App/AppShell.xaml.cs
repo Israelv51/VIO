@@ -16,5 +16,21 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(
             AppRoutes.Certifications,
             typeof(CertificationsPage));
+
+        Routing.RegisterRoute(
+            AppRoutes.ProfessionalProfile,
+            typeof(ProfessionalProfilePage));
+
+        Routing.RegisterRoute(
+            AppRoutes.Education,
+            typeof(EducationPage));
+
+        Routing.RegisterRoute(
+            AppRoutes.Experience,
+            typeof(ExperiencePage));
+
+        Routing.RegisterRoute(
+            AppRoutes.Skills,
+            typeof(SkillsPage));
     }
 }

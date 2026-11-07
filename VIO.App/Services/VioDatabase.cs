@@ -24,15 +24,6 @@ public class VioDatabase
         await _database.CreateTableAsync<Skill>();
     }
 
-    public async Task<List<User>> GetUsersAsync()
-    {
-        await InitAsync();
-
-        return await _database!
-            .Table<User>()
-            .ToListAsync();
-    }
-
     public async Task<User?> GetUserByIdAsync(int id)
     {
         await InitAsync();
@@ -66,8 +57,7 @@ public class VioDatabase
         user.CreatedAt = DateTime.UtcNow;
         user.UpdatedAt = DateTime.UtcNow;
 
-        return await _database!
-            .InsertAsync(user);
+        return await _database!.InsertAsync(user);
     }
 
     public async Task<int> UpdateUserAsync(User user)
@@ -76,8 +66,7 @@ public class VioDatabase
 
         user.UpdatedAt = DateTime.UtcNow;
 
-        return await _database!
-            .UpdateAsync(user);
+        return await _database!.UpdateAsync(user);
     }
 
     public async Task<ProfessionalProfile?> GetProfessionalProfileAsync(
@@ -97,25 +86,19 @@ public class VioDatabase
         await InitAsync();
 
         var existing =
-            await GetProfessionalProfileAsync(
-                profile.UserId);
+            await GetProfessionalProfileAsync(profile.UserId);
 
         profile.UpdatedAt = DateTime.UtcNow;
 
         if (existing is null)
-        {
-            return await _database!
-                .InsertAsync(profile);
-        }
+            return await _database!.InsertAsync(profile);
 
         profile.Id = existing.Id;
 
-        return await _database!
-            .UpdateAsync(profile);
+        return await _database!.UpdateAsync(profile);
     }
 
-    public async Task<List<Education>> GetEducationAsync(
-        int userId)
+    public async Task<List<Education>> GetEducationAsync(int userId)
     {
         await InitAsync();
 
@@ -129,29 +112,26 @@ public class VioDatabase
             .ToList();
     }
 
-    public async Task<int> AddEducationAsync(
-        Education education)
+    public async Task<int> SaveEducationAsync(Education item)
     {
         await InitAsync();
 
-        education.CreatedAt =
-            DateTime.UtcNow;
+        if (item.Id == 0)
+        {
+            item.CreatedAt = DateTime.UtcNow;
+            return await _database!.InsertAsync(item);
+        }
 
-        return await _database!
-            .InsertAsync(education);
+        return await _database!.UpdateAsync(item);
     }
 
-    public async Task<int> DeleteEducationAsync(
-        Education education)
+    public async Task<int> DeleteEducationAsync(Education item)
     {
         await InitAsync();
-
-        return await _database!
-            .DeleteAsync(education);
+        return await _database!.DeleteAsync(item);
     }
 
-    public async Task<List<WorkExperience>> GetExperiencesAsync(
-        int userId)
+    public async Task<List<WorkExperience>> GetExperiencesAsync(int userId)
     {
         await InitAsync();
 
@@ -165,29 +145,26 @@ public class VioDatabase
             .ToList();
     }
 
-    public async Task<int> AddExperienceAsync(
-        WorkExperience experience)
+    public async Task<int> SaveExperienceAsync(WorkExperience item)
     {
         await InitAsync();
 
-        experience.CreatedAt =
-            DateTime.UtcNow;
+        if (item.Id == 0)
+        {
+            item.CreatedAt = DateTime.UtcNow;
+            return await _database!.InsertAsync(item);
+        }
 
-        return await _database!
-            .InsertAsync(experience);
+        return await _database!.UpdateAsync(item);
     }
 
-    public async Task<int> DeleteExperienceAsync(
-        WorkExperience experience)
+    public async Task<int> DeleteExperienceAsync(WorkExperience item)
     {
         await InitAsync();
-
-        return await _database!
-            .DeleteAsync(experience);
+        return await _database!.DeleteAsync(item);
     }
 
-    public async Task<List<Skill>> GetSkillsAsync(
-        int userId)
+    public async Task<List<Skill>> GetSkillsAsync(int userId)
     {
         await InitAsync();
 
@@ -201,24 +178,22 @@ public class VioDatabase
             .ToList();
     }
 
-    public async Task<int> AddSkillAsync(
-        Skill skill)
+    public async Task<int> SaveSkillAsync(Skill item)
     {
         await InitAsync();
 
-        skill.CreatedAt =
-            DateTime.UtcNow;
+        if (item.Id == 0)
+        {
+            item.CreatedAt = DateTime.UtcNow;
+            return await _database!.InsertAsync(item);
+        }
 
-        return await _database!
-            .InsertAsync(skill);
+        return await _database!.UpdateAsync(item);
     }
 
-    public async Task<int> DeleteSkillAsync(
-        Skill skill)
+    public async Task<int> DeleteSkillAsync(Skill item)
     {
         await InitAsync();
-
-        return await _database!
-            .DeleteAsync(skill);
+        return await _database!.DeleteAsync(item);
     }
 }

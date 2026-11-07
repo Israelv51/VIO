@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="VIO.App.Views.SkillsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:VIO.App.ViewModels"
+    xmlns:models="clr-namespace:VIO.App.Models"
+    x:DataType="viewModels:SkillsViewModel"
+    Title="Habilidades"
+    SafeAreaEdges="All"
+    BackgroundColor="{StaticResource VioBackground}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12">
+
+            <Label Text="Habilidades"
+                   Style="{StaticResource VioLargeTitle}" />
+
+            <Label Text="Agrega tecnologías, idiomas y competencias."
+                   Style="{StaticResource VioBody}" />
+
+            <Entry Text="{Binding SkillName}"
+                   Placeholder="Ej. C#, SQL, Inglés, Liderazgo" />
+
+            <Picker Title="Nivel"
+                    ItemsSource="{Binding Levels}"
+                    SelectedItem="{Binding SelectedLevel}" />
+
+            <Label Text="{Binding Message}"
+                   TextColor="{StaticResource VioBlue}" />
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button Text="Guardar"
+                        Style="{StaticResource VioPrimaryButton}"
+                        Command="{Binding SaveCommand}" />
+
+                <Button Grid.Column="1"
+                        Text="Nuevo"
+                        HeightRequest="54"
+                        CornerRadius="16"
+                        Command="{Binding NewSkillCommand}" />
+            </Grid>
+
+            <Button Text="Eliminar seleccionado"
+                    IsVisible="{Binding IsEditing}"
+                    BackgroundColor="#FFE5E5"
+                    TextColor="{StaticResource VioError}"
+                    CornerRadius="16"
+                    Command="{Binding DeleteSkillCommand}" />
+
+            <Label Text="Mis habilidades"
+                   Margin="0,18,0,4"
+                   Style="{StaticResource VioSectionTitle}" />
+
+            <CollectionView ItemsSource="{Binding Items}"
+                            SelectedItem="{Binding SelectedSkill}"
+                            SelectionMode="Single"
+                            HeightRequest="350">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Skill">
+
+                        <Border Margin="0,5"
+                                Padding="16"
+                                BackgroundColor="White"
+                                Stroke="{StaticResource VioBorder}"
+                                StrokeShape="RoundRectangle 18">
+
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="{Binding Name}"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource VioTextPrimary}" />
+
+                                <Border Grid.Column="1"
+                                        Padding="10,5"
+                                        BackgroundColor="{StaticResource VioBlueSoft}"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 10">
+
+                                    <Label Text="{Binding Level}"
+                                           FontSize="11"
+                                           FontAttributes="Bold"
+                                           TextColor="{StaticResource VioBlue}" />
+
+                                </Border>
+                            </Grid>
+
+                        </Border>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

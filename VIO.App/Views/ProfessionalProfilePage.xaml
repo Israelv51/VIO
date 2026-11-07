@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="VIO.App.Views.ProfessionalProfilePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:VIO.App.ViewModels"
+    x:DataType="viewModels:ProfessionalProfileViewModel"
+    Title="Perfil profesional"
+    SafeAreaEdges="All"
+    BackgroundColor="{StaticResource VioBackground}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12">
+
+            <Label Text="Perfil profesional"
+                   Style="{StaticResource VioLargeTitle}" />
+
+            <Label Text="Esta información aparecerá en tu CV."
+                   Style="{StaticResource VioBody}" />
+
+            <Label Text="Título profesional" />
+            <Entry Text="{Binding ProfessionalTitle}"
+                   Placeholder="Ej. Desarrollador de software" />
+
+            <Label Text="Sobre mí" />
+            <Editor Text="{Binding Summary}"
+                    Placeholder="Describe brevemente tu perfil profesional"
+                    HeightRequest="120" />
+
+            <Label Text="Teléfono" />
+            <Entry Text="{Binding Phone}"
+                   Keyboard="Telephone"
+                   Placeholder="Número de contacto" />
+
+            <Label Text="Ciudad" />
+            <Entry Text="{Binding City}"
+                   Placeholder="Ciudad, estado" />
+
+            <Label Text="LinkedIn" />
+            <Entry Text="{Binding LinkedIn}"
+                   Placeholder="Enlace de LinkedIn" />
+
+            <Label Text="GitHub" />
+            <Entry Text="{Binding GitHub}"
+                   Placeholder="Enlace de GitHub" />
+
+            <Label Text="{Binding Message}"
+                   TextColor="{StaticResource VioSuccess}" />
+
+            <Button Text="Guardar perfil"
+                    Style="{StaticResource VioPrimaryButton}"
+                    Command="{Binding SaveCommand}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

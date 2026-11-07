@@ -79,6 +79,10 @@ public partial class HomeViewModel : ObservableObject
     {
         _sessionService.End();
 
+        Name = "Usuario";
+        Email = string.Empty;
+        Greeting = "Hola";
+
         await Shell.Current.GoToAsync(
             AppRoutes.Login);
     }

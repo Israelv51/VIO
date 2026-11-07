@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="VIO.App.Views.ExperiencePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:VIO.App.ViewModels"
+    xmlns:models="clr-namespace:VIO.App.Models"
+    x:DataType="viewModels:ExperienceViewModel"
+    Title="Experiencia"
+    SafeAreaEdges="All"
+    BackgroundColor="{StaticResource VioBackground}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12">
+
+            <Label Text="Experiencia"
+                   Style="{StaticResource VioLargeTitle}" />
+
+            <Entry Text="{Binding Company}"
+                   Placeholder="Empresa" />
+
+            <Entry Text="{Binding Position}"
+                   Placeholder="Puesto" />
+
+            <Label Text="Fecha de inicio" />
+            <DatePicker Date="{Binding StartDate}" />
+
+            <Label Text="Fecha de término" />
+            <DatePicker Date="{Binding EndDate}" />
+
+            <HorizontalStackLayout Spacing="12">
+                <Switch IsToggled="{Binding IsCurrent}" />
+                <Label Text="Trabajo actualmente aquí"
+                       VerticalTextAlignment="Center" />
+            </HorizontalStackLayout>
+
+            <Editor Text="{Binding Description}"
+                    Placeholder="Funciones, actividades y logros"
+                    HeightRequest="100" />
+
+            <Label Text="{Binding Message}"
+                   TextColor="{StaticResource VioBlue}" />
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button Text="Guardar"
+                        Style="{StaticResource VioPrimaryButton}"
+                        Command="{Binding SaveCommand}" />
+
+                <Button Grid.Column="1"
+                        Text="Nuevo"
+                        HeightRequest="54"
+                        CornerRadius="16"
+                        Command="{Binding NewExperienceCommand}" />
+            </Grid>
+
+            <Button Text="Eliminar seleccionado"
+                    IsVisible="{Binding IsEditing}"
+                    BackgroundColor="#FFE5E5"
+                    TextColor="{StaticResource VioError}"
+                    CornerRadius="16"
+                    Command="{Binding DeleteExperienceCommand}" />
+
+            <Label Text="Mi experiencia"
+                   Margin="0,18,0,4"
+                   Style="{StaticResource VioSectionTitle}" />
+
+            <CollectionView ItemsSource="{Binding Items}"
+                            SelectedItem="{Binding SelectedExperience}"
+                            SelectionMode="Single"
+                            HeightRequest="320">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:WorkExperience">
+
+                        <Border Margin="0,5"
+                                Padding="16"
+                                BackgroundColor="White"
+                                Stroke="{StaticResource VioBorder}"
+                                StrokeShape="RoundRectangle 18">
+
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="{Binding Position}"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource VioTextPrimary}" />
+
+                                <Label Text="{Binding Company}"
+                                       FontSize="14"
+                                       TextColor="{StaticResource VioTextSecondary}" />
+
+                                <Label Text="Toca para editar"
+                                       FontSize="11"
+                                       TextColor="{StaticResource VioTextTertiary}" />
+                            </VerticalStackLayout>
+
+                        </Border>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
