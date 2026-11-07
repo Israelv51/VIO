@@ -4,15 +4,43 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:VIO.App.Views"
+
     Shell.FlyoutBehavior="Disabled"
+
+    Shell.TabBarBackgroundColor="#FFFFFF"
+    Shell.TabBarForegroundColor="#0A84FF"
+    Shell.TabBarTitleColor="#0A84FF"
+    Shell.TabBarUnselectedColor="#8E8E93"
+
     BackgroundColor="#F5F5F7">
 
     <ShellContent
         Route="login"
+        Shell.TabBarIsVisible="False"
         ContentTemplate="{DataTemplate views:LoginPage}" />
 
-    <ShellContent
-        Route="home"
-        ContentTemplate="{DataTemplate views:HomePage}" />
+    <TabBar Route="main">
+
+        <ShellContent
+            Title="Inicio"
+            Route="home"
+            ContentTemplate="{DataTemplate views:HomePage}" />
+
+        <ShellContent
+            Title="CV"
+            Route="cv"
+            ContentTemplate="{DataTemplate views:CvPage}" />
+
+        <ShellContent
+            Title="Documentos"
+            Route="documents"
+            ContentTemplate="{DataTemplate views:DocumentsPage}" />
+
+        <ShellContent
+            Title="Perfil"
+            Route="profile"
+            ContentTemplate="{DataTemplate views:ProfilePage}" />
+
+    </TabBar>
 
 </Shell>

@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="VIO.App.Views.CvPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+
+    Shell.NavBarIsVisible="False"
+    SafeAreaEdges="All"
+    BackgroundColor="{StaticResource VioBackground}">
+
+    <ScrollView>
+
+        <VerticalStackLayout
+            Padding="24,22,24,36"
+            Spacing="14">
+
+            <Label
+                Text="Mi CV"
+                Style="{StaticResource VioLargeTitle}" />
+
+            <Label
+                Text="Tu trayectoria profesional"
+                Style="{StaticResource VioBody}" />
+
+
+            <Border
+                Margin="0,12,0,10"
+                Padding="20"
+                BackgroundColor="White"
+                Stroke="{StaticResource VioBorder}"
+                StrokeShape="RoundRectangle 22">
+
+                <HorizontalStackLayout Spacing="16">
+
+                    <Border
+                        WidthRequest="64"
+                        HeightRequest="64"
+                        BackgroundColor="{StaticResource VioBlueSoft}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 32">
+
+                        <Label
+                            Text="V"
+                            FontSize="25"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource VioBlue}"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center" />
+
+                    </Border>
+
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        Spacing="4">
+
+                        <Label
+                            Text="Tu perfil profesional"
+                            FontSize="19"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource VioTextPrimary}" />
+
+                        <Label
+                            Text="Completa tus datos para generar tu CV."
+                            FontSize="13"
+                            TextColor="{StaticResource VioTextSecondary}" />
+
+                    </VerticalStackLayout>
+
+                </HorizontalStackLayout>
+
+            </Border>
+
+
+            <Label
+                Text="Información"
+                Margin="0,8,0,0"
+                Style="{StaticResource VioSectionTitle}" />
+
+
+            <Border
+                BackgroundColor="White"
+                Stroke="{StaticResource VioBorder}"
+                StrokeShape="RoundRectangle 20">
+
+                <VerticalStackLayout>
+
+                    <Grid Padding="18"
+                          ColumnDefinitions="*,Auto">
+
+                        <Label
+                            Text="Datos personales"
+                            FontSize="16"
+                            TextColor="{StaticResource VioTextPrimary}" />
+
+                        <Label
+                            Grid.Column="1"
+                            Text="›"
+                            FontSize="26"
+                            TextColor="{StaticResource VioTextTertiary}" />
+
+                    </Grid>
+
+                    <BoxView
+                        Margin="18,0"
+                        HeightRequest="1"
+                        BackgroundColor="{StaticResource VioBorder}" />
+
+                    <Grid Padding="18"
+                          ColumnDefinitions="*,Auto">
+
+                        <Label
+                            Text="Formación académica"
+                            FontSize="16"
+                            TextColor="{StaticResource VioTextPrimary}" />
+
+                        <Label
+                            Grid.Column="1"
+                            Text="›"
+                            FontSize="26"
+                            TextColor="{StaticResource VioTextTertiary}" />
+
+                    </Grid>
+
+                    <BoxView
+                        Margin="18,0"
+                        HeightRequest="1"
+                        BackgroundColor="{StaticResource VioBorder}" />
+
+                    <Grid Padding="18"
+                          ColumnDefinitions="*,Auto">
+
+                        <Label
+                            Text="Experiencia"
+                            FontSize="16"
+                            TextColor="{StaticResource VioTextPrimary}" />
+
+                        <Label
+                            Grid.Column="1"
+                            Text="›"
+                            FontSize="26"
+                            TextColor="{StaticResource VioTextTertiary}" />
+
+                    </Grid>
+
+                    <BoxView
+                        Margin="18,0"
+                        HeightRequest="1"
+                        BackgroundColor="{StaticResource VioBorder}" />
+
+                    <Grid Padding="18"
+                          ColumnDefinitions="*,Auto">
+
+                        <Label
+                            Text="Habilidades"
+                            FontSize="16"
+                            TextColor="{StaticResource VioTextPrimary}" />
+
+                        <Label
+                            Grid.Column="1"
+                            Text="›"
+                            FontSize="26"
+                            TextColor="{StaticResource VioTextTertiary}" />
+
+                    </Grid>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

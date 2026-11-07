@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="VIO.App.Views.CertificationsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+
+    Shell.NavBarIsVisible="True"
+    Shell.TitleColor="#1D1D1F"
+    Title="Certificaciones"
+    SafeAreaEdges="All"
+    BackgroundColor="{StaticResource VioBackground}">
+
+    <ScrollView>
+
+        <VerticalStackLayout
+            Padding="24,20,24,36"
+            Spacing="14">
+
+            <Label
+                Text="Certificaciones"
+                Style="{StaticResource VioLargeTitle}" />
+
+            <Label
+                Text="Cursos, constancias y certificaciones profesionales."
+                Style="{StaticResource VioBody}" />
+
+
+            <Border
+                Margin="0,14,0,0"
+                Padding="20"
+                BackgroundColor="White"
+                Stroke="{StaticResource VioBorder}"
+                StrokeShape="RoundRectangle 20">
+
+                <Grid
+                    ColumnDefinitions="Auto,*"
+                    ColumnSpacing="16">
+
+                    <Border
+                        WidthRequest="48"
+                        HeightRequest="48"
+                        BackgroundColor="#ECF9EF"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 15">
+
+                        <Label
+                            Text="✓"
+                            FontSize="22"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource VioSuccess}"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center" />
+
+                    </Border>
+
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        VerticalOptions="Center"
+                        Spacing="4">
+
+                        <Label
+                            Text="Aún no hay certificaciones"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource VioTextPrimary}" />
+
+                        <Label
+                            Text="Agrega tus cursos y certificados."
+                            FontSize="13"
+                            TextColor="{StaticResource VioTextSecondary}" />
+
+                    </VerticalStackLayout>
+
+                </Grid>
+
+            </Border>
+
+
+            <Button
+                Margin="0,12,0,0"
+                Text="+  Agregar certificación"
+                Style="{StaticResource VioPrimaryButton}" />
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

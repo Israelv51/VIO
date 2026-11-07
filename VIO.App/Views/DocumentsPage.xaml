@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="VIO.App.Views.DocumentsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+
+    Shell.NavBarIsVisible="False"
+    SafeAreaEdges="All"
+    BackgroundColor="{StaticResource VioBackground}">
+
+    <Grid
+        RowDefinitions="*,Auto">
+
+        <ScrollView>
+
+            <VerticalStackLayout
+                Padding="24,22,24,120"
+                Spacing="14">
+
+                <Label
+                    Text="Documentos"
+                    Style="{StaticResource VioLargeTitle}" />
+
+                <Label
+                    Text="Tus archivos importantes siempre contigo."
+                    Style="{StaticResource VioBody}" />
+
+
+                <Border
+                    Margin="0,12,0,8"
+                    Padding="16,2"
+                    HeightRequest="52"
+                    BackgroundColor="#E9E9ED"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 15">
+
+                    <Grid
+                        ColumnDefinitions="Auto,*"
+                        ColumnSpacing="10">
+
+                        <Label
+                            Text="⌕"
+                            FontSize="22"
+                            VerticalTextAlignment="Center"
+                            TextColor="{StaticResource VioTextTertiary}" />
+
+                        <Entry
+                            Grid.Column="1"
+                            Placeholder="Buscar documentos"
+                            BackgroundColor="Transparent"
+                            FontSize="15" />
+
+                    </Grid>
+
+                </Border>
+
+
+                <Label
+                    Text="Mis documentos"
+                    Margin="0,12,0,0"
+                    Style="{StaticResource VioSectionTitle}" />
+
+
+                <Border
+                    Margin="0,4,0,0"
+                    Padding="24"
+                    BackgroundColor="White"
+                    Stroke="{StaticResource VioBorder}"
+                    StrokeShape="RoundRectangle 22">
+
+                    <VerticalStackLayout
+                        Spacing="12"
+                        HorizontalOptions="Center">
+
+                        <Border
+                            WidthRequest="64"
+                            HeightRequest="64"
+                            BackgroundColor="{StaticResource VioBlueSoft}"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 20">
+
+                            <Label
+                                Text="PDF"
+                                FontSize="15"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource VioBlue}"
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center" />
+
+                        </Border>
+
+                        <Label
+                            Text="Aún no tienes documentos"
+                            FontSize="17"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource VioTextPrimary}"
+                            HorizontalTextAlignment="Center" />
+
+                        <Label
+                            Text="Podrás subir PDFs, imágenes y documentos oficiales."
+                            FontSize="13"
+                            TextColor="{StaticResource VioTextSecondary}"
+                            HorizontalTextAlignment="Center" />
+
+                    </VerticalStackLayout>
+
+                </Border>
+
+            </VerticalStackLayout>
+
+        </ScrollView>
+
+
+        <Button
+            Grid.Row="1"
+            Text="+  Agregar documento"
+            Margin="24,10,24,18"
+            Style="{StaticResource VioPrimaryButton}" />
+
+    </Grid>
+
+</ContentPage>

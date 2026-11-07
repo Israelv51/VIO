@@ -22,7 +22,7 @@ public partial class HomeViewModel : ObservableObject
     public partial string Email { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial string Greeting { get; set; } = "Bienvenido a VIO";
+    public partial string Greeting { get; set; } = "Hola";
 
     public async Task LoadAsync()
     {
@@ -47,12 +47,37 @@ public partial class HomeViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private async Task GoToCvAsync()
+    {
+        await Shell.Current.GoToAsync(
+            AppRoutes.Cv);
+    }
+
+    [RelayCommand]
+    private async Task GoToDocumentsAsync()
+    {
+        await Shell.Current.GoToAsync(
+            AppRoutes.Documents);
+    }
+
+    [RelayCommand]
+    private async Task GoToProfileAsync()
+    {
+        await Shell.Current.GoToAsync(
+            AppRoutes.Profile);
+    }
+
+    [RelayCommand]
+    private async Task GoToCertificationsAsync()
+    {
+        await Shell.Current.GoToAsync(
+            AppRoutes.Certifications);
+    }
+
+    [RelayCommand]
     private async Task LogoutAsync()
     {
         _sessionService.End();
-
-        Name = "Usuario";
-        Email = string.Empty;
 
         await Shell.Current.GoToAsync(
             AppRoutes.Login);

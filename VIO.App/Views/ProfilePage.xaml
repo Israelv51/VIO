@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="VIO.App.Views.ProfilePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+
+    Shell.NavBarIsVisible="False"
+    SafeAreaEdges="All"
+    BackgroundColor="{StaticResource VioBackground}">
+
+    <ScrollView>
+
+        <VerticalStackLayout
+            Padding="24,22,24,36"
+            Spacing="16">
+
+            <Label
+                Text="Perfil"
+                Style="{StaticResource VioLargeTitle}" />
+
+
+            <VerticalStackLayout
+                Margin="0,14,0,8"
+                HorizontalOptions="Center"
+                Spacing="8">
+
+                <Border
+                    WidthRequest="92"
+                    HeightRequest="92"
+                    BackgroundColor="{StaticResource VioBlueSoft}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 46">
+
+                    <Label
+                        Text="V"
+                        FontSize="36"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource VioBlue}"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center" />
+
+                </Border>
+
+                <Label
+                    Text="Tu perfil VIO"
+                    FontSize="21"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource VioTextPrimary}"
+                    HorizontalTextAlignment="Center" />
+
+                <Label
+                    Text="Identidad profesional"
+                    FontSize="14"
+                    TextColor="{StaticResource VioTextSecondary}"
+                    HorizontalTextAlignment="Center" />
+
+            </VerticalStackLayout>
+
+
+            <Border
+                Margin="0,14,0,0"
+                BackgroundColor="White"
+                Stroke="{StaticResource VioBorder}"
+                StrokeShape="RoundRectangle 20">
+
+                <VerticalStackLayout>
+
+                    <Grid Padding="18"
+                          ColumnDefinitions="*,Auto">
+
+                        <Label
+                            Text="Editar perfil"
+                            FontSize="16"
+                            TextColor="{StaticResource VioTextPrimary}" />
+
+                        <Label
+                            Grid.Column="1"
+                            Text="›"
+                            FontSize="26"
+                            TextColor="{StaticResource VioTextTertiary}" />
+
+                    </Grid>
+
+                    <BoxView
+                        Margin="18,0"
+                        HeightRequest="1"
+                        BackgroundColor="{StaticResource VioBorder}" />
+
+                    <Grid Padding="18"
+                          ColumnDefinitions="*,Auto">
+
+                        <Label
+                            Text="Seguridad"
+                            FontSize="16"
+                            TextColor="{StaticResource VioTextPrimary}" />
+
+                        <Label
+                            Grid.Column="1"
+                            Text="›"
+                            FontSize="26"
+                            TextColor="{StaticResource VioTextTertiary}" />
+
+                    </Grid>
+
+                    <BoxView
+                        Margin="18,0"
+                        HeightRequest="1"
+                        BackgroundColor="{StaticResource VioBorder}" />
+
+                    <Grid Padding="18"
+                          ColumnDefinitions="*,Auto">
+
+                        <Label
+                            Text="Notificaciones"
+                            FontSize="16"
+                            TextColor="{StaticResource VioTextPrimary}" />
+
+                        <Label
+                            Grid.Column="1"
+                            Text="›"
+                            FontSize="26"
+                            TextColor="{StaticResource VioTextTertiary}" />
+
+                    </Grid>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>
