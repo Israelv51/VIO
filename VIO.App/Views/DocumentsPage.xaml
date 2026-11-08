@@ -211,6 +211,29 @@
                 ColumnSpacing="8">
 
                 <Button
+                    Text="Escanear documento"
+                    HeightRequest="50"
+                    CornerRadius="15"
+                    BackgroundColor="{StaticResource VioBlue}"
+                    TextColor="White"
+                    Command="{Binding OpenScannerCommand}" />
+
+                <Button
+                    Grid.Column="1"
+                    Text="Doble cara"
+                    HeightRequest="50"
+                    CornerRadius="15"
+                    BackgroundColor="{StaticResource VioBlueSoft}"
+                    TextColor="{StaticResource VioBlue}"
+                    Command="{Binding OpenTwoSidedScannerCommand}" />
+
+            </Grid>
+
+            <Grid
+                ColumnDefinitions="*,*"
+                ColumnSpacing="8">
+
+                <Button
                     Text="Fotos → PDF"
                     HeightRequest="50"
                     CornerRadius="15"
@@ -222,25 +245,23 @@
 
                 <Button
                     Grid.Column="1"
-                    Text="Escanear doble cara"
+                    Text="+ Archivo"
                     HeightRequest="50"
                     CornerRadius="15"
-                    BackgroundColor="{StaticResource VioBlueSoft}"
-                    TextColor="{StaticResource VioBlue}"
-                    Command="{Binding OpenScannerCommand}" />
+                    BackgroundColor="White"
+                    BorderColor="{StaticResource VioBorder}"
+                    BorderWidth="1"
+                    TextColor="{StaticResource VioTextPrimary}"
+                    Command="{Binding AddDocumentCommand}" />
 
             </Grid>
-
-            <Button
-                Text="+  Agregar documento"
-                Style="{StaticResource VioPrimaryButton}"
-                Command="{Binding AddDocumentCommand}" />
 
         </VerticalStackLayout>
 
     </Grid>
 
 </ContentPage>
+
 
 
 

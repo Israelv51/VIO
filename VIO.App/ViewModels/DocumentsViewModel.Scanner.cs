@@ -9,6 +9,13 @@ public partial class DocumentsViewModel
     private async Task OpenScannerAsync()
     {
         await Shell.Current.GoToAsync(
-            AppRoutes.DocumentScanner);
+            $"{AppRoutes.DocumentScanner}?mode=multi");
+    }
+
+    [RelayCommand]
+    private async Task OpenTwoSidedScannerAsync()
+    {
+        await Shell.Current.GoToAsync(
+            $"{AppRoutes.DocumentScanner}?mode=double");
     }
 }

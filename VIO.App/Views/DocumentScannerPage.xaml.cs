@@ -6,17 +6,21 @@ using VIO.App.Services;
 
 namespace VIO.App.Views;
 
-public partial class DocumentScannerPage : ContentPage
+public partial class DocumentScannerPage :
+    ContentPage,
+    IQueryAttributable
 {
     private readonly ISessionService _session;
     private readonly PdfDocumentService _pdfService;
     private readonly VioDatabase _database;
 
-    private string? _frontImagePath;
-    private string? _backImagePath;
+    private readonly List<string> _pages = [];
 
-    private int _step = 1;
+    private string _mode = "double";
+    private int _doubleSideStep = 1;
+
     private bool _isCapturing;
+    private bool _cameraStarted;
 
     public DocumentScannerPage(
         ISessionService session,
@@ -30,11 +34,30 @@ public partial class DocumentScannerPage : ContentPage
         _database = database;
     }
 
+    public void ApplyQueryAttributes(
+        IDictionary<string, object> query)
+    {
+        if (query.TryGetValue(
+                "mode",
+                out var value))
+        {
+            _mode =
+                value?.ToString()?.ToLowerInvariant()
+                ?? "double";
+        }
+
+        Dispatcher.Dispatch(
+            ConfigureMode);
+    }
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
 
-        await StartCameraAsync();
+        ConfigureMode();
+
+        if (!_cameraStarted)
+            await StartCameraAsync();
     }
 
     protected override void OnDisappearing()
@@ -51,6 +74,74 @@ public partial class DocumentScannerPage : ContentPage
         }
     }
 
+    private void ConfigureMode()
+    {
+        if (_mode == "multi")
+        {
+            StepLabel.Text =
+                "PÁGINA 1";
+
+            SideLabel.Text =
+                "PÁGINA 1";
+
+            TitleLabel.Text =
+                "Escanea tu documento";
+
+            InstructionLabel.Text =
+                "Coloca la primera página dentro del marco.";
+
+            FrontDot.WidthRequest =
+                22;
+
+            FrontDot.BackgroundColor =
+                Color.FromArgb("#0A84FF");
+
+            BackDot.IsVisible =
+                false;
+
+            FinishButton.IsVisible =
+                false;
+
+            ResetButton.IsVisible =
+                false;
+        }
+        else
+        {
+            StepLabel.Text =
+                "FRENTE · 1 DE 2";
+
+            SideLabel.Text =
+                "FRENTE";
+
+            TitleLabel.Text =
+                "Escanea el frente";
+
+            InstructionLabel.Text =
+                "Coloca todo el documento dentro del marco y evita reflejos.";
+
+            FrontDot.WidthRequest =
+                22;
+
+            FrontDot.BackgroundColor =
+                Color.FromArgb("#0A84FF");
+
+            BackDot.IsVisible =
+                true;
+
+            BackDot.WidthRequest =
+                7;
+
+            BackDot.BackgroundColor =
+                Color.FromArgb("#6E6E73");
+
+            FinishButton.IsVisible =
+                false;
+
+            ResetButton.IsVisible =
+                false;
+        }
+    }
+
     private async Task StartCameraAsync()
     {
         var permission =
@@ -63,9 +154,10 @@ public partial class DocumentScannerPage : ContentPage
                 "Permiso de cámara";
 
             InstructionLabel.Text =
-                "VIO necesita acceso a la cámara para escanear documentos.";
+                "VIO necesita acceso a la cámara.";
 
-            CaptureButton.IsEnabled = false;
+            CaptureButton.IsEnabled =
+                false;
 
             return;
         }
@@ -92,10 +184,8 @@ public partial class DocumentScannerPage : ContentPage
                 TitleLabel.Text =
                     "Cámara no disponible";
 
-                InstructionLabel.Text =
-                    "No se encontró una cámara compatible.";
-
-                CaptureButton.IsEnabled = false;
+                CaptureButton.IsEnabled =
+                    false;
 
                 return;
             }
@@ -103,13 +193,14 @@ public partial class DocumentScannerPage : ContentPage
             await Camera.StartCameraPreview(
                 timeout.Token);
 
+            _cameraStarted =
+                true;
+
             FlashButton.IsEnabled =
                 Camera.SelectedCamera.IsFlashSupported;
 
             if (!FlashButton.IsEnabled)
-            {
                 FlashButton.Opacity = 0.35;
-            }
         }
         catch (Exception ex)
         {
@@ -119,7 +210,8 @@ public partial class DocumentScannerPage : ContentPage
             InstructionLabel.Text =
                 ex.Message;
 
-            CaptureButton.IsEnabled = false;
+            CaptureButton.IsEnabled =
+                false;
         }
     }
 
@@ -135,43 +227,35 @@ public partial class DocumentScannerPage : ContentPage
 
         try
         {
-            _isCapturing = true;
-            CaptureButton.IsEnabled = false;
+            _isCapturing =
+                true;
 
-            using var timeout =
-                new CancellationTokenSource(
-                    TimeSpan.FromSeconds(10));
-
-            using var capturedStream =
-                await Camera.CaptureImage(
-                    timeout.Token);
+            CaptureButton.IsEnabled =
+                false;
 
             string imagePath =
-                Path.Combine(
-                    FileSystem.Current.CacheDirectory,
-                    $"vio-scan-{Guid.NewGuid():N}.jpg");
+                await CaptureTemporaryImageAsync();
 
-            await using (
-                var output =
-                    File.Create(imagePath))
-            {
-                await capturedStream.CopyToAsync(
-                    output);
-            }
+            _pages.Add(
+                imagePath);
 
             HapticFeedback.Default.Perform(
                 HapticFeedbackType.Click);
 
             await AnimateCaptureAsync();
 
-            if (_step == 1)
+            if (_mode == "multi")
             {
-                DeleteFileIfExists(
-                    _frontImagePath);
+                HandleMultiPageCapture();
 
-                _frontImagePath =
-                    imagePath;
+                CaptureButton.IsEnabled =
+                    true;
 
+                return;
+            }
+
+            if (_doubleSideStep == 1)
+            {
                 await MoveToBackSideAsync();
 
                 CaptureButton.IsEnabled =
@@ -180,46 +264,14 @@ public partial class DocumentScannerPage : ContentPage
                 return;
             }
 
-            DeleteFileIfExists(
-                _backImagePath);
-
-            _backImagePath =
-                imagePath;
-
-            ProcessingOverlay.IsVisible =
-                true;
-
-            Camera.IsTorchOn =
-                false;
-
-            var pdf =
-                await _pdfService
-                    .CreateFromImageFilesAsync(
-                        userId,
-                        new[]
-                        {
-                            _frontImagePath!,
-                            _backImagePath!
-                        },
-                        $"Documento escaneado {DateTime.Now:dd-MM-yyyy HH-mm}");
-
-            await _database.AddDocumentAsync(
-                pdf);
-
-            CleanupTemporaryImages();
-
-            HapticFeedback.Default.Perform(
-                HapticFeedbackType.Click);
-
-            Camera.StopCameraPreview();
-
-            await Shell.Current.GoToAsync(
-                "..");
+            await FinishDocumentAsync(
+                userId,
+                $"Documento doble cara {DateTime.Now:dd-MM-yyyy HH-mm}");
         }
         catch (OperationCanceledException)
         {
             InstructionLabel.Text =
-                "La captura tardó demasiado. Intenta nuevamente.";
+                "La captura tardó demasiado.";
 
             CaptureButton.IsEnabled =
                 true;
@@ -245,22 +297,63 @@ public partial class DocumentScannerPage : ContentPage
         }
     }
 
-    private async Task AnimateCaptureAsync()
+    private async Task<string> CaptureTemporaryImageAsync()
     {
-        FlashOverlay.Opacity = 0;
+        using var timeout =
+            new CancellationTokenSource(
+                TimeSpan.FromSeconds(10));
 
-        await FlashOverlay.FadeToAsync(
-            0.82,
-            60);
+        using var capturedStream =
+            await Camera.CaptureImage(
+                timeout.Token);
 
-        await FlashOverlay.FadeToAsync(
-            0,
-            140);
+        string path =
+            Path.Combine(
+                FileSystem.Current.CacheDirectory,
+                $"vio-scan-{Guid.NewGuid():N}.jpg");
+
+        await using var output =
+            File.Create(path);
+
+        await capturedStream.CopyToAsync(
+            output);
+
+        return path;
+    }
+
+    private void HandleMultiPageCapture()
+    {
+        int captured =
+            _pages.Count;
+
+        int next =
+            captured + 1;
+
+        StepLabel.Text =
+            captured == 1
+                ? "1 PÁGINA CAPTURADA"
+                : $"{captured} PÁGINAS CAPTURADAS";
+
+        SideLabel.Text =
+            $"PÁGINA {next}";
+
+        TitleLabel.Text =
+            $"Página {captured} lista";
+
+        InstructionLabel.Text =
+            "Coloca la siguiente página y captura otra foto, o toca Finalizar PDF.";
+
+        FinishButton.IsVisible =
+            true;
+
+        ResetButton.IsVisible =
+            true;
     }
 
     private async Task MoveToBackSideAsync()
     {
-        _step = 2;
+        _doubleSideStep =
+            2;
 
         FlipCard.IsVisible =
             true;
@@ -312,6 +405,71 @@ public partial class DocumentScannerPage : ContentPage
             true;
     }
 
+    private async void OnFinishClicked(
+        object? sender,
+        EventArgs e)
+    {
+        if (_session.CurrentUserId is not int userId)
+            return;
+
+        if (_pages.Count == 0)
+            return;
+
+        await FinishDocumentAsync(
+            userId,
+            $"Documento escaneado {DateTime.Now:dd-MM-yyyy HH-mm}");
+    }
+
+    private async Task FinishDocumentAsync(
+        int userId,
+        string name)
+    {
+        ProcessingOverlay.IsVisible =
+            true;
+
+        CaptureButton.IsEnabled =
+            false;
+
+        FinishButton.IsEnabled =
+            false;
+
+        Camera.IsTorchOn =
+            false;
+
+        var pdf =
+            await _pdfService.CreateFromImageFilesAsync(
+                userId,
+                _pages,
+                name);
+
+        await _database.AddDocumentAsync(
+            pdf);
+
+        CleanupTemporaryImages();
+
+        HapticFeedback.Default.Perform(
+            HapticFeedbackType.Click);
+
+        Camera.StopCameraPreview();
+
+        await Shell.Current.GoToAsync(
+            "..");
+    }
+
+    private async Task AnimateCaptureAsync()
+    {
+        FlashOverlay.Opacity =
+            0;
+
+        await FlashOverlay.FadeToAsync(
+            0.82,
+            60);
+
+        await FlashOverlay.FadeToAsync(
+            0,
+            140);
+    }
+
     private void OnFlashClicked(
         object? sender,
         EventArgs e)
@@ -337,37 +495,19 @@ public partial class DocumentScannerPage : ContentPage
     {
         CleanupTemporaryImages();
 
-        _step = 1;
+        _doubleSideStep =
+            1;
 
-        StepLabel.Text =
-            "FRENTE · 1 DE 2";
-
-        FrontDot.WidthRequest =
-            22;
-
-        FrontDot.BackgroundColor =
-            Color.FromArgb("#0A84FF");
-
-        BackDot.WidthRequest =
-            7;
-
-        BackDot.BackgroundColor =
-            Color.FromArgb("#6E6E73");
-
-        SideLabel.Text =
-            "FRENTE";
-
-        TitleLabel.Text =
-            "Escanea el frente";
-
-        InstructionLabel.Text =
-            "Coloca todo el documento dentro del marco y evita reflejos.";
-
-        ResetButton.IsVisible =
+        ProcessingOverlay.IsVisible =
             false;
+
+        FinishButton.IsEnabled =
+            true;
 
         CaptureButton.IsEnabled =
             true;
+
+        ConfigureMode();
 
         HapticFeedback.Default.Perform(
             HapticFeedbackType.Click);
@@ -381,7 +521,9 @@ public partial class DocumentScannerPage : ContentPage
 
         try
         {
-            Camera.IsTorchOn = false;
+            Camera.IsTorchOn =
+                false;
+
             Camera.StopCameraPreview();
         }
         catch
@@ -394,26 +536,12 @@ public partial class DocumentScannerPage : ContentPage
 
     private void CleanupTemporaryImages()
     {
-        DeleteFileIfExists(
-            _frontImagePath);
-
-        DeleteFileIfExists(
-            _backImagePath);
-
-        _frontImagePath =
-            null;
-
-        _backImagePath =
-            null;
-    }
-
-    private static void DeleteFileIfExists(
-        string? path)
-    {
-        if (!string.IsNullOrWhiteSpace(path) &&
-            File.Exists(path))
+        foreach (string path in _pages)
         {
-            File.Delete(path);
+            if (File.Exists(path))
+                File.Delete(path);
         }
+
+        _pages.Clear();
     }
 }

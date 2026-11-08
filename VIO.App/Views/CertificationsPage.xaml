@@ -2,11 +2,12 @@
 
 <ContentPage
     x:Class="VIO.App.Views.CertificationsPage"
+    x:Name="Page"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-
-    Shell.NavBarIsVisible="True"
-    Shell.TitleColor="#1D1D1F"
+    xmlns:viewModels="clr-namespace:VIO.App.ViewModels"
+    xmlns:models="clr-namespace:VIO.App.Models"
+    x:DataType="viewModels:CertificationsViewModel"
     Title="Certificaciones"
     SafeAreaEdges="All"
     BackgroundColor="{StaticResource VioBackground}">
@@ -14,7 +15,7 @@
     <ScrollView>
 
         <VerticalStackLayout
-            Padding="24,20,24,36"
+            Padding="24,20,24,50"
             Spacing="14">
 
             <Label
@@ -22,65 +23,270 @@
                 Style="{StaticResource VioLargeTitle}" />
 
             <Label
-                Text="Cursos, constancias y certificaciones profesionales."
+                Text="Acreditaciones y evidencias que respaldan tu perfil."
                 Style="{StaticResource VioBody}" />
 
-
             <Border
-                Margin="0,14,0,0"
-                Padding="20"
-                BackgroundColor="White"
-                Stroke="{StaticResource VioBorder}"
-                StrokeShape="RoundRectangle 20">
+                Margin="0,8,0,4"
+                Padding="12,0"
+                HeightRequest="50"
+                BackgroundColor="#E9E9ED"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 15">
 
-                <Grid
-                    ColumnDefinitions="Auto,*"
-                    ColumnSpacing="16">
-
-                    <Border
-                        WidthRequest="48"
-                        HeightRequest="48"
-                        BackgroundColor="#ECF9EF"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 15">
-
-                        <Label
-                            Text="✓"
-                            FontSize="22"
-                            FontAttributes="Bold"
-                            TextColor="{StaticResource VioSuccess}"
-                            HorizontalTextAlignment="Center"
-                            VerticalTextAlignment="Center" />
-
-                    </Border>
-
-                    <VerticalStackLayout
-                        Grid.Column="1"
-                        VerticalOptions="Center"
-                        Spacing="4">
-
-                        <Label
-                            Text="Aún no hay certificaciones"
-                            FontSize="16"
-                            FontAttributes="Bold"
-                            TextColor="{StaticResource VioTextPrimary}" />
-
-                        <Label
-                            Text="Agrega tus cursos y certificados."
-                            FontSize="13"
-                            TextColor="{StaticResource VioTextSecondary}" />
-
-                    </VerticalStackLayout>
-
-                </Grid>
+                <SearchBar
+                    Text="{Binding SearchText}"
+                    Placeholder="Buscar certificaciones"
+                    BackgroundColor="Transparent" />
 
             </Border>
 
-
-            <Button
+            <Label
+                Text="Información"
                 Margin="0,12,0,0"
-                Text="+  Agregar certificación"
-                Style="{StaticResource VioPrimaryButton}" />
+                Style="{StaticResource VioSectionTitle}" />
+
+            <Border
+                Padding="18"
+                BackgroundColor="White"
+                Stroke="{StaticResource VioBorder}"
+                StrokeShape="RoundRectangle 22">
+
+                <VerticalStackLayout Spacing="11">
+
+                    <Entry
+                        Text="{Binding Name}"
+                        Placeholder="Nombre de la certificación" />
+
+                    <Entry
+                        Text="{Binding Issuer}"
+                        Placeholder="Institución emisora" />
+
+                    <Label
+                        Text="Fecha de emisión"
+                        FontSize="12"
+                        TextColor="{StaticResource VioTextSecondary}" />
+
+                    <DatePicker
+                        Date="{Binding IssueDate}" />
+
+                    <Label
+                        Text="Fecha de vencimiento"
+                        FontSize="12"
+                        TextColor="{StaticResource VioTextSecondary}" />
+
+                    <DatePicker
+                        Date="{Binding ExpirationDate}" />
+
+                    <HorizontalStackLayout Spacing="10">
+
+                        <Switch
+                            IsToggled="{Binding DoesNotExpire}" />
+
+                        <Label
+                            Text="Esta certificación no vence"
+                            VerticalTextAlignment="Center" />
+
+                    </HorizontalStackLayout>
+
+                    <Entry
+                        Text="{Binding CredentialId}"
+                        Placeholder="ID de credencial (opcional)" />
+
+                    <Entry
+                        Text="{Binding CredentialUrl}"
+                        Placeholder="URL de verificación (opcional)"
+                        Keyboard="Url" />
+
+                    <Editor
+                        Text="{Binding Notes}"
+                        Placeholder="Notas"
+                        HeightRequest="75" />
+
+                    <BoxView
+                        Margin="0,5"
+                        HeightRequest="1"
+                        BackgroundColor="{StaticResource VioBorder}" />
+
+                    <Label
+                        Text="Evidencia"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource VioTextPrimary}" />
+
+                    <Label
+                        Text="Vincula un PDF o imagen guardado en VIO Docs."
+                        FontSize="12"
+                        TextColor="{StaticResource VioTextSecondary}" />
+
+                    <Picker
+                        Title="Seleccionar documento"
+                        ItemsSource="{Binding AvailableDocuments}"
+                        ItemDisplayBinding="{Binding DisplayName}"
+                        SelectedItem="{Binding SelectedDocument}" />
+
+                    <Label
+                        Text="{Binding Message}"
+                        FontSize="12"
+                        TextColor="{StaticResource VioBlue}" />
+
+                    <Grid
+                        ColumnDefinitions="*,*"
+                        ColumnSpacing="8">
+
+                        <Button
+                            Text="Guardar"
+                            Style="{StaticResource VioPrimaryButton}"
+                            Command="{Binding SaveCommand}" />
+
+                        <Button
+                            Grid.Column="1"
+                            Text="Nueva"
+                            HeightRequest="54"
+                            CornerRadius="16"
+                            Command="{Binding NewCertificationCommand}" />
+
+                    </Grid>
+
+                    <Button
+                        Text="Eliminar certificación"
+                        IsVisible="{Binding IsEditing}"
+                        BackgroundColor="#FFE5E5"
+                        TextColor="{StaticResource VioError}"
+                        CornerRadius="16"
+                        Command="{Binding DeleteCommand}" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <Label
+                Text="Mis certificaciones"
+                Margin="0,18,0,0"
+                Style="{StaticResource VioSectionTitle}" />
+
+            <CollectionView
+                ItemsSource="{Binding Items}"
+                SelectedItem="{Binding SelectedCertification}"
+                SelectionMode="Single"
+                HeightRequest="520">
+
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate
+                        x:DataType="models:Certification">
+
+                        <Border
+                            Margin="0,5"
+                            Padding="17"
+                            BackgroundColor="White"
+                            Stroke="{StaticResource VioBorder}"
+                            StrokeShape="RoundRectangle 20">
+
+                            <Grid
+                                ColumnDefinitions="Auto,*,Auto"
+                                ColumnSpacing="14">
+
+                                <Border
+                                    WidthRequest="52"
+                                    HeightRequest="52"
+                                    BackgroundColor="{StaticResource VioBlueSoft}"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 16">
+
+                                    <Label
+                                        Text="✓"
+                                        FontSize="22"
+                                        FontAttributes="Bold"
+                                        TextColor="{StaticResource VioBlue}"
+                                        HorizontalTextAlignment="Center"
+                                        VerticalTextAlignment="Center" />
+
+                                </Border>
+
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    Spacing="3">
+
+                                    <Label
+                                        Text="{Binding Name}"
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        TextColor="{StaticResource VioTextPrimary}" />
+
+                                    <Label
+                                        Text="{Binding Issuer}"
+                                        FontSize="13"
+                                        TextColor="{StaticResource VioTextSecondary}" />
+
+                                    <Label
+                                        Text="{Binding IssueDateText}"
+                                        FontSize="11"
+                                        TextColor="{StaticResource VioTextTertiary}" />
+
+                                    <Label
+                                        Text="{Binding ExpirationText}"
+                                        FontSize="11"
+                                        TextColor="{StaticResource VioTextTertiary}" />
+
+                                    <HorizontalStackLayout
+                                        Margin="0,5,0,0"
+                                        Spacing="5">
+
+                                        <Label
+                                            Text="Documento:"
+                                            FontSize="11"
+                                            FontAttributes="Bold"
+                                            TextColor="{StaticResource VioTextSecondary}" />
+
+                                        <Label
+                                            Text="{Binding RelatedDocumentName}"
+                                            FontSize="11"
+                                            LineBreakMode="TailTruncation"
+                                            TextColor="{StaticResource VioBlue}" />
+
+                                    </HorizontalStackLayout>
+
+                                    <Button
+                                        Margin="0,5,0,0"
+                                        Text="Abrir evidencia"
+                                        HeightRequest="35"
+                                        Padding="12,3"
+                                        HorizontalOptions="Start"
+                                        CornerRadius="11"
+                                        BackgroundColor="{StaticResource VioBlueSoft}"
+                                        TextColor="{StaticResource VioBlue}"
+                                        FontSize="11"
+                                        Command="{Binding Source={x:Reference Page}, Path=BindingContext.OpenEvidenceCommand}"
+                                        CommandParameter="{Binding .}" />
+
+                                </VerticalStackLayout>
+
+                                <Border
+                                    Grid.Column="2"
+                                    Padding="9,5"
+                                    HeightRequest="28"
+                                    BackgroundColor="#EAF8EE"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 10">
+
+                                    <Label
+                                        Text="{Binding StatusText}"
+                                        FontSize="10"
+                                        FontAttributes="Bold"
+                                        TextColor="{StaticResource VioSuccess}" />
+
+                                </Border>
+
+                            </Grid>
+
+                        </Border>
+
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
 
         </VerticalStackLayout>
 

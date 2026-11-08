@@ -274,17 +274,34 @@
             ColumnDefinitions="*,100,*"
             VerticalOptions="End">
 
-            <Button
-                x:Name="ResetButton"
+            <VerticalStackLayout
                 Grid.Column="0"
-                Text="Repetir"
-                IsVisible="False"
+                Spacing="2"
                 HorizontalOptions="Start"
-                VerticalOptions="Center"
-                BackgroundColor="Transparent"
-                TextColor="#D1D1D6"
-                FontSize="14"
-                Clicked="OnResetClicked" />
+                VerticalOptions="Center">
+
+                <Button
+                    x:Name="FinishButton"
+                    Text="Finalizar PDF"
+                    IsVisible="False"
+                    Padding="10,4"
+                    BackgroundColor="#0A84FF"
+                    TextColor="White"
+                    FontSize="12"
+                    CornerRadius="12"
+                    Clicked="OnFinishClicked" />
+
+                <Button
+                    x:Name="ResetButton"
+                    Text="Reiniciar"
+                    IsVisible="False"
+                    Padding="10,4"
+                    BackgroundColor="Transparent"
+                    TextColor="#D1D1D6"
+                    FontSize="12"
+                    Clicked="OnResetClicked" />
+
+            </VerticalStackLayout>
 
             <!-- Botón cámara estilo iOS -->
             <Border
@@ -422,3 +439,4 @@
     </Grid>
 
 </ContentPage>
+

@@ -23,6 +23,7 @@ public partial class VioDatabase
         await _database.CreateTableAsync<WorkExperience>();
         await _database.CreateTableAsync<Skill>();
         await _database.CreateTableAsync<VioDocument>();
+        await _database.CreateTableAsync<Certification>();
     }
 
     public async Task<User?> GetUserByIdAsync(int id)
@@ -198,4 +199,5 @@ public partial class VioDatabase
         return await _database!.DeleteAsync(item);
     }
 }
+
 
