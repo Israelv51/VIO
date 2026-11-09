@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using VIO.App.Interfaces;
+using VIO.App.Constants;
 using VIO.App.Models;
 using VIO.App.Services;
 
@@ -137,9 +138,13 @@ public partial class DocumentsViewModel : ObservableObject
                 document);
 
             await LoadAsync();
+            await RefreshHubAsync();
 
             Message =
                 "PDF creado correctamente.";
+
+            await Shell.Current.GoToAsync(
+                $"{AppRoutes.DocumentDetails}?id={document.Id}");
         }
         catch (Exception ex)
         {
@@ -251,3 +256,5 @@ public partial class DocumentsViewModel : ObservableObject
             "Documento eliminado.";
     }
 }
+
+

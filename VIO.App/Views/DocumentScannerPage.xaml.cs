@@ -2,6 +2,7 @@
 using Microsoft.Maui.Devices;
 using Microsoft.Maui.Storage;
 using VIO.App.Interfaces;
+using VIO.App.Constants;
 using VIO.App.Services;
 
 namespace VIO.App.Views;
@@ -454,6 +455,9 @@ public partial class DocumentScannerPage :
 
         await Shell.Current.GoToAsync(
             "..");
+
+        await Shell.Current.GoToAsync(
+            $"{AppRoutes.DocumentDetails}?id={pdf.Id}");
     }
 
     private async Task AnimateCaptureAsync()
@@ -545,3 +549,4 @@ public partial class DocumentScannerPage :
         _pages.Clear();
     }
 }
+
