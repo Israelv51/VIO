@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="VIO.App.Views.ProfilePhotoEditorPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:VIO.App.ViewModels"
+    x:DataType="viewModels:ProfilePhotoEditorViewModel"
+    Shell.NavBarIsVisible="False"
+    SafeAreaEdges="All"
+    BackgroundColor="#F5F5F7">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Header -->
+        <Grid
+            Padding="20,14"
+            ColumnDefinitions="Auto,*,Auto"
+            BackgroundColor="White">
+
+            <Button
+                Text="‹"
+                WidthRequest="44"
+                HeightRequest="44"
+                CornerRadius="22"
+                FontSize="30"
+                Padding="0"
+                BackgroundColor="#F2F2F7"
+                TextColor="#1D1D1F"
+                Clicked="OnBackClicked" />
+
+            <VerticalStackLayout
+                Grid.Column="1"
+                Margin="14,0"
+                VerticalOptions="Center">
+
+                <Label
+                    Text="Ajustar foto"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    TextColor="#1D1D1F" />
+
+                <Label
+                    Text="Define cómo aparecerás en VIO y tu CV"
+                    FontSize="11"
+                    TextColor="#6E6E73" />
+
+            </VerticalStackLayout>
+
+            <Button
+                Grid.Column="2"
+                Text="Restablecer"
+                BackgroundColor="Transparent"
+                TextColor="#0A84FF"
+                Command="{Binding ResetCommand}" />
+
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+
+            <VerticalStackLayout
+                Padding="24"
+                Spacing="20">
+
+                <!-- Preview -->
+                <VerticalStackLayout
+                    HorizontalOptions="Center"
+                    Spacing="10">
+
+                    <Border
+                        WidthRequest="330"
+                        HeightRequest="330"
+                        BackgroundColor="#E9E9ED"
+                        Stroke="#D8E9FF"
+                        StrokeThickness="3"
+                        StrokeShape="RoundRectangle 42">
+
+                        <Grid
+                            WidthRequest="330"
+                            HeightRequest="330"
+                            IsClippedToBounds="True">
+
+                            <Image
+                                Source="{Binding SourcePath}"
+                                Aspect="AspectFill"
+                                Scale="{Binding Zoom}"
+                                TranslationX="{Binding PreviewX}"
+                                TranslationY="{Binding PreviewY}" />
+
+                            <Border
+                                Margin="14"
+                                BackgroundColor="Transparent"
+                                Stroke="#66FFFFFF"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 32" />
+
+                        </Grid>
+
+                    </Border>
+
+                    <Label
+                        Text="Vista previa 1:1"
+                        FontSize="12"
+                        TextColor="#8E8E93" />
+
+                </VerticalStackLayout>
+
+                <!-- Controls -->
+                <Border
+                    Padding="20"
+                    BackgroundColor="White"
+                    Stroke="#E5E5EA"
+                    StrokeShape="RoundRectangle 24">
+
+                    <VerticalStackLayout Spacing="18">
+
+                        <VerticalStackLayout Spacing="6">
+
+                            <Grid ColumnDefinitions="*,Auto">
+
+                                <Label
+                                    Text="Zoom"
+                                    FontSize="14"
+                                    FontAttributes="Bold"
+                                    TextColor="#1D1D1F" />
+
+                                <Label
+                                    Grid.Column="1"
+                                    Text="{Binding Zoom, StringFormat='{0:F1}×'}"
+                                    FontSize="13"
+                                    TextColor="#0A84FF" />
+
+                            </Grid>
+
+                            <Slider
+                                Minimum="1"
+                                Maximum="3"
+                                Value="{Binding Zoom}"
+                                MinimumTrackColor="#0A84FF"
+                                MaximumTrackColor="#D1D1D6"
+                                ThumbColor="#0A84FF" />
+
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+
+                            <Label
+                                Text="Posición horizontal"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                TextColor="#1D1D1F" />
+
+                            <Slider
+                                Minimum="-100"
+                                Maximum="100"
+                                Value="{Binding OffsetX}"
+                                MinimumTrackColor="#0A84FF"
+                                MaximumTrackColor="#D1D1D6"
+                                ThumbColor="#0A84FF" />
+
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+
+                            <Label
+                                Text="Posición vertical"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                TextColor="#1D1D1F" />
+
+                            <Slider
+                                Minimum="-100"
+                                Maximum="100"
+                                Value="{Binding OffsetY}"
+                                MinimumTrackColor="#0A84FF"
+                                MaximumTrackColor="#D1D1D6"
+                                ThumbColor="#0A84FF" />
+
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+
+                </Border>
+
+                <Border
+                    Padding="16"
+                    BackgroundColor="#EAF4FF"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 18">
+
+                    <Label
+                        Text="La misma foto ajustada se utilizará en tu perfil, vista previa y CV generado."
+                        FontSize="12"
+                        TextColor="#0A64D8" />
+
+                </Border>
+
+                <Label
+                    Text="{Binding Message}"
+                    FontSize="12"
+                    TextColor="#34C759"
+                    HorizontalTextAlignment="Center" />
+
+            </VerticalStackLayout>
+
+        </ScrollView>
+
+        <Border
+            Grid.Row="2"
+            Padding="20,12,20,20"
+            BackgroundColor="White"
+            StrokeThickness="0">
+
+            <Button
+                Text="Guardar foto"
+                HeightRequest="56"
+                CornerRadius="17"
+                BackgroundColor="#0A84FF"
+                TextColor="White"
+                FontAttributes="Bold"
+                Command="{Binding SaveCommand}" />
+
+        </Border>
+
+    </Grid>
+
+</ContentPage>

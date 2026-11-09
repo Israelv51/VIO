@@ -17,4 +17,9 @@ public static class AppRoutes
     public const string Skills = "skills";
 
     public const string DocumentScanner = "document-scanner";
+    public const string CvPreview = "cv-preview";
+    public const string ProfilePhotoEditor = "profile-photo-editor";
 }
+
+
+

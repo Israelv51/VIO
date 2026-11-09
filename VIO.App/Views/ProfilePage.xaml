@@ -6,7 +6,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewModels="clr-namespace:VIO.App.ViewModels"
     x:DataType="viewModels:ProfileViewModel"
-
     Shell.NavBarIsVisible="False"
     SafeAreaEdges="All"
     BackgroundColor="{StaticResource VioBackground}">
@@ -14,57 +13,122 @@
     <ScrollView>
 
         <VerticalStackLayout
-            Padding="24,22,24,36"
+            Padding="24,22,24,60"
             Spacing="16">
 
             <Label
                 Text="Perfil"
                 Style="{StaticResource VioLargeTitle}" />
 
-
-            <VerticalStackLayout
-                Margin="0,14,0,8"
-                HorizontalOptions="Center"
-                Spacing="8">
-
-                <Border
-                    WidthRequest="92"
-                    HeightRequest="92"
-                    BackgroundColor="{StaticResource VioBlueSoft}"
-                    StrokeThickness="0"
-                    StrokeShape="RoundRectangle 46">
-
-                    <Label
-                        Text="V"
-                        FontSize="36"
-                        FontAttributes="Bold"
-                        TextColor="{StaticResource VioBlue}"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center" />
-
-                </Border>
-
-                <Label
-                    Text="{Binding Name}"
-                    FontSize="21"
-                    FontAttributes="Bold"
-                    TextColor="{StaticResource VioTextPrimary}"
-                    HorizontalTextAlignment="Center" />
-
-                <Label
-                    Text="{Binding Email}"
-                    FontSize="14"
-                    TextColor="{StaticResource VioTextSecondary}"
-                    HorizontalTextAlignment="Center" />
-
-            </VerticalStackLayout>
-
+            <Label
+                Text="Tu identidad dentro de VIO."
+                Style="{StaticResource VioBody}" />
 
             <Border
-                Margin="0,14,0,0"
+                Margin="0,12,0,0"
+                Padding="24"
                 BackgroundColor="White"
                 Stroke="{StaticResource VioBorder}"
-                StrokeShape="RoundRectangle 20">
+                StrokeShape="RoundRectangle 26">
+
+                <VerticalStackLayout
+                    Spacing="14"
+                    HorizontalOptions="Center">
+
+                    <Border
+                        WidthRequest="132"
+                        HeightRequest="132"
+                        BackgroundColor="{StaticResource VioBlueSoft}"
+                        Stroke="#D8E9FF"
+                        StrokeThickness="2"
+                        StrokeShape="RoundRectangle 34">
+
+                        <Grid>
+
+                            <Label
+                                Text="VIO"
+                                FontSize="24"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource VioBlue}"
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center" />
+
+                            <Image
+                                Source="{Binding ProfilePhotoPath}"
+                                Aspect="AspectFill" />
+
+                        </Grid>
+
+                    </Border>
+
+                    <Label
+                        Text="{Binding Name}"
+                        FontSize="22"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource VioTextPrimary}"
+                        HorizontalTextAlignment="Center" />
+
+                    <Label
+                        Text="{Binding Email}"
+                        FontSize="13"
+                        TextColor="{StaticResource VioTextSecondary}"
+                        HorizontalTextAlignment="Center" />
+
+                    <VerticalStackLayout
+                        WidthRequest="420"
+                        Spacing="8">
+
+                        <Grid
+                            ColumnDefinitions="*,*"
+                            ColumnSpacing="8">
+
+                            <Button
+                                Text="Cambiar foto"
+                                HeightRequest="48"
+                                CornerRadius="15"
+                                BackgroundColor="{StaticResource VioBlue}"
+                                TextColor="White"
+                                Command="{Binding SelectPhotoCommand}" />
+
+                            <Button
+                                Grid.Column="1"
+                                Text="Ajustar foto"
+                                HeightRequest="48"
+                                CornerRadius="15"
+                                BackgroundColor="{StaticResource VioBlueSoft}"
+                                TextColor="{StaticResource VioBlue}"
+                                Command="{Binding AdjustPhotoCommand}" />
+
+                        </Grid>
+
+                        <Button
+                            Text="Eliminar foto"
+                            HeightRequest="44"
+                            CornerRadius="14"
+                            BackgroundColor="#FFF0F0"
+                            TextColor="{StaticResource VioError}"
+                            Command="{Binding RemovePhotoCommand}" />
+
+                    </VerticalStackLayout>
+
+                    <Label
+                        Text="{Binding PhotoMessage}"
+                        FontSize="12"
+                        TextColor="{StaticResource VioSuccess}" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <Label
+                Text="Cuenta"
+                Margin="0,12,0,0"
+                Style="{StaticResource VioSectionTitle}" />
+
+            <Border
+                BackgroundColor="White"
+                Stroke="{StaticResource VioBorder}"
+                StrokeShape="RoundRectangle 22">
 
                 <VerticalStackLayout>
 
@@ -107,54 +171,22 @@
 
                     </Grid>
 
-                    <BoxView
-                        Margin="18,0"
-                        HeightRequest="1"
-                        BackgroundColor="{StaticResource VioBorder}" />
-
-                    <Grid
-                        Padding="18"
-                        ColumnDefinitions="*,Auto">
-
-                        <Label
-                            Text="Notificaciones"
-                            FontSize="16"
-                            TextColor="{StaticResource VioTextPrimary}" />
-
-                        <Label
-                            Grid.Column="1"
-                            Text="›"
-                            FontSize="26"
-                            TextColor="{StaticResource VioTextTertiary}" />
-
-                    </Grid>
-
                 </VerticalStackLayout>
 
             </Border>
 
-
             <Button
+                Margin="0,12,0,0"
                 Text="Cerrar sesión"
-                Margin="0,18,0,0"
-                HeightRequest="52"
+                HeightRequest="54"
                 CornerRadius="16"
-                BackgroundColor="#FFE5E5"
+                BackgroundColor="#FFE9E9"
                 TextColor="{StaticResource VioError}"
-                FontSize="16"
-                FontAttributes="Bold"
                 Command="{Binding LogoutCommand}" />
-
-
-            <Label
-                Text="VIO · Verified Identity &amp; Opportunities"
-                Margin="0,18,0,0"
-                FontSize="11"
-                TextColor="{StaticResource VioTextTertiary}"
-                HorizontalTextAlignment="Center" />
 
         </VerticalStackLayout>
 
     </ScrollView>
 
 </ContentPage>
+

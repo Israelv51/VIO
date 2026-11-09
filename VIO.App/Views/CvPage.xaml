@@ -277,13 +277,28 @@
 
                     </Grid>
 
-                    <Button
-                        Text="Abrir último CV"
-                        HeightRequest="44"
-                        CornerRadius="14"
-                        BackgroundColor="#22FFFFFF"
-                        TextColor="White"
-                        Command="{Binding OpenLastCvCommand}" />
+                    <Grid
+                        ColumnDefinitions="*,*"
+                        ColumnSpacing="8">
+
+                        <Button
+                            Text="Abrir último CV"
+                            HeightRequest="44"
+                            CornerRadius="14"
+                            BackgroundColor="#22FFFFFF"
+                            TextColor="White"
+                            Command="{Binding OpenLastCvCommand}" />
+
+                        <Button
+                            Grid.Column="1"
+                            Text="Ver en VIO"
+                            HeightRequest="44"
+                            CornerRadius="14"
+                            BackgroundColor="White"
+                            TextColor="{StaticResource VioBlue}"
+                            Command="{Binding PreviewCommand}" />
+
+                    </Grid>
 
                 </VerticalStackLayout>
 
@@ -419,3 +434,4 @@
     </ScrollView>
 
 </ContentPage>
+

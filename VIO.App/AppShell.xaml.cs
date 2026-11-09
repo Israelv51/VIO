@@ -38,3 +38,5 @@ public partial class AppShell : Shell
             typeof(DocumentScannerPage));
     }
 }
+
+
