@@ -31,7 +31,7 @@
 		<ApplicationTitle>VIO</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.vio.app</ApplicationId>
+		<ApplicationId>com.pegato.vio</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
@@ -76,5 +76,6 @@
 	</ItemGroup>
 
 </Project>
+
 
 
