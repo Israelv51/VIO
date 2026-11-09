@@ -42,6 +42,7 @@ public static class MauiProgram
             AuthService>();
 
         builder.Services.AddSingleton<DocumentStorageService>();
+        builder.Services.AddSingleton<DocumentPreviewService>();
         builder.Services.AddSingleton<PdfDocumentService>();
         builder.Services.AddSingleton<CvPdfService>();
 
@@ -61,6 +62,7 @@ public static class MauiProgram
 
         builder.Services.AddTransient<DocumentsViewModel>();
         builder.Services.AddTransient<DocumentDetailsViewModel>();
+        builder.Services.AddTransient<DocumentPreviewViewModel>();
         builder.Services.AddTransient<CertificationsViewModel>();
 
         builder.Services.AddTransient<ProfessionalProfileViewModel>();
@@ -84,6 +86,7 @@ public static class MauiProgram
 
         builder.Services.AddTransient<DocumentsPage>();
         builder.Services.AddTransient<DocumentDetailsPage>();
+        builder.Services.AddTransient<DocumentPreviewPage>();
 
         builder.Services.AddTransient<CertificationsPage>();
 
@@ -101,4 +104,6 @@ public static class MauiProgram
         return builder.Build();
     }
 }
+
+
 

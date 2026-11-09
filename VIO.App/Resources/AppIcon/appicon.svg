@@ -1,4 +1,63 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="456" height="456" viewBox="0 0 456 456" version="1.1" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0" y="0" width="456" height="456" fill="#512BD4" />
+﻿<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="512"
+    height="512"
+    viewBox="0 0 512 512">
+
+    <defs>
+        <linearGradient
+            id="bg"
+            x1="0"
+            y1="0"
+            x2="1"
+            y2="1">
+
+            <stop
+                offset="0"
+                stop-color="#0756D9" />
+
+            <stop
+                offset="1"
+                stop-color="#0A84FF" />
+
+        </linearGradient>
+    </defs>
+
+    <rect
+        width="512"
+        height="512"
+        rx="120"
+        fill="url(#bg)" />
+
+    <circle
+        cx="410"
+        cy="96"
+        r="125"
+        fill="#FFFFFF"
+        opacity="0.08" />
+
+    <circle
+        cx="455"
+        cy="330"
+        r="150"
+        fill="#FFFFFF"
+        opacity="0.06" />
+
+    <path
+        d="
+        M105 135
+        C95 113 111 92 136 92
+        H176
+        C191 92 202 100 209 115
+        L260 235
+        L311 115
+        C318 100 329 92 344 92
+        H385
+        C410 92 426 113 416 135
+        L292 402
+        C286 416 275 424 260 424
+        C245 424 234 416 228 402
+        Z"
+        fill="#FFFFFF" />
+
 </svg>

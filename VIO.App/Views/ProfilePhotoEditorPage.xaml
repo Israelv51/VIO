@@ -85,7 +85,19 @@
                                 Aspect="AspectFill"
                                 Scale="{Binding Zoom}"
                                 TranslationX="{Binding PreviewX}"
-                                TranslationY="{Binding PreviewY}" />
+                                TranslationY="{Binding PreviewY}">
+
+                                <Image.GestureRecognizers>
+
+                                    <PanGestureRecognizer
+                                        PanUpdated="OnPanUpdated" />
+
+                                    <PinchGestureRecognizer
+                                        PinchUpdated="OnPinchUpdated" />
+
+                                </Image.GestureRecognizers>
+
+                            </Image>
 
                             <Border
                                 Margin="14"
@@ -142,6 +154,104 @@
 
                         </VerticalStackLayout>
 
+                        <VerticalStackLayout Spacing="8">
+
+                            <Label
+                                Text="Mover foto"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                TextColor="#1D1D1F" />
+
+                            <Grid
+                                WidthRequest="190"
+                                HorizontalOptions="Center"
+                                ColumnDefinitions="60,60,60"
+                                RowDefinitions="48,48,48">
+
+                                <Button
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Text="↑"
+                                    FontSize="22"
+                                    CornerRadius="14"
+                                    BackgroundColor="#EAF4FF"
+                                    TextColor="#0A84FF"
+                                    Clicked="OnMoveUpClicked" />
+
+                                <Button
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Text="←"
+                                    FontSize="22"
+                                    CornerRadius="14"
+                                    BackgroundColor="#EAF4FF"
+                                    TextColor="#0A84FF"
+                                    Clicked="OnMoveLeftClicked" />
+
+                                <Border
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="6"
+                                    BackgroundColor="#F2F2F7"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 14">
+
+                                    <Label
+                                        Text="◎"
+                                        FontSize="21"
+                                        TextColor="#8E8E93"
+                                        HorizontalTextAlignment="Center"
+                                        VerticalTextAlignment="Center" />
+
+                                </Border>
+
+                                <Button
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Text="→"
+                                    FontSize="22"
+                                    CornerRadius="14"
+                                    BackgroundColor="#EAF4FF"
+                                    TextColor="#0A84FF"
+                                    Clicked="OnMoveRightClicked" />
+
+                                <Button
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Text="↓"
+                                    FontSize="22"
+                                    CornerRadius="14"
+                                    BackgroundColor="#EAF4FF"
+                                    TextColor="#0A84FF"
+                                    Clicked="OnMoveDownClicked" />
+
+                            </Grid>
+
+                            <Label
+                                Text="También puedes arrastrar la foto directamente."
+                                FontSize="11"
+                                HorizontalTextAlignment="Center"
+                                TextColor="#8E8E93" />
+
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+
+                            <Label
+                                Text="Posición vertical"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                TextColor="#1D1D1F" />
+
+                            <Slider
+                                Minimum="-100"
+                                Maximum="100"
+                                Value="{Binding OffsetY}"
+                                MinimumTrackColor="#0A84FF"
+                                MaximumTrackColor="#D1D1D6"
+                                ThumbColor="#0A84FF" />
+
+                        </VerticalStackLayout>
                         <VerticalStackLayout Spacing="6">
 
                             <Label
@@ -225,3 +335,5 @@
     </Grid>
 
 </ContentPage>
+
+

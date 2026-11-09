@@ -48,5 +48,9 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(
             AppRoutes.DocumentDetails,
             typeof(DocumentDetailsPage));
+
+        Routing.RegisterRoute(
+            AppRoutes.DocumentPreview,
+            typeof(DocumentPreviewPage));
     }
 }

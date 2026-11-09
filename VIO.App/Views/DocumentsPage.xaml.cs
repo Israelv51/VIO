@@ -20,5 +20,6 @@ public partial class DocumentsPage : ContentPage
         base.OnAppearing();
 
         await _viewModel.LoadAsync();
+        await _viewModel.RefreshHubAsync();
     }
 }

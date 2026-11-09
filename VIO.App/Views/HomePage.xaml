@@ -6,7 +6,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewModels="clr-namespace:VIO.App.ViewModels"
     x:DataType="viewModels:HomeViewModel"
-
     Shell.NavBarIsVisible="False"
     SafeAreaEdges="All"
     BackgroundColor="{StaticResource VioBackground}">
@@ -14,129 +13,165 @@
     <ScrollView>
 
         <VerticalStackLayout
-            Padding="24,20,24,36"
-            Spacing="0">
+            Padding="24,22,24,110"
+            Spacing="16">
 
+            <!-- HEADER -->
             <Grid
-                ColumnDefinitions="*,Auto">
+                ColumnDefinitions="*,Auto"
+                Margin="0,0,0,4">
 
-                <VerticalStackLayout
-                    Spacing="2">
-
-                    <Label
-                        Text="{Binding Greeting}"
-                        Style="{StaticResource VioLargeTitle}" />
+                <VerticalStackLayout Spacing="2">
 
                     <Label
-                        Text="Tu identidad profesional"
-                        Style="{StaticResource VioBody}" />
+                        Text="{Binding FirstName, StringFormat='Hola, {0}'}"
+                        FontSize="31"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource VioTextPrimary}" />
+
+                    <Label
+                        Text="{Binding ProfessionalTitle}"
+                        FontSize="14"
+                        TextColor="{StaticResource VioTextSecondary}" />
 
                 </VerticalStackLayout>
 
                 <Border
                     Grid.Column="1"
-                    WidthRequest="54"
-                    HeightRequest="54"
+                    WidthRequest="58"
+                    HeightRequest="58"
                     BackgroundColor="{StaticResource VioBlueSoft}"
-                    StrokeThickness="0"
-                    StrokeShape="RoundRectangle 27">
+                    Stroke="#D8E9FF"
+                    StrokeThickness="2"
+                    StrokeShape="RoundRectangle 20">
 
-                    <Label
-                        Text="V"
-                        FontSize="22"
-                        FontAttributes="Bold"
-                        TextColor="{StaticResource VioBlue}"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center" />
+                    <Grid>
+
+                        <Label
+                            Text="V"
+                            FontSize="21"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource VioBlue}"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center" />
+
+                        <Image
+                            Source="{Binding ProfilePhotoPath}"
+                            Aspect="AspectFill" />
+
+                    </Grid>
 
                     <Border.GestureRecognizers>
-
                         <TapGestureRecognizer
                             Command="{Binding GoToProfileCommand}" />
-
                     </Border.GestureRecognizers>
 
                 </Border>
 
             </Grid>
 
-
+            <!-- HERO -->
             <Border
-                Margin="0,28,0,0"
-                Padding="22"
-                BackgroundColor="{StaticResource VioBlue}"
+                Margin="0,10,0,0"
+                Padding="24"
+                BackgroundColor="#0A84FF"
                 StrokeThickness="0"
-                StrokeShape="RoundRectangle 24">
+                StrokeShape="RoundRectangle 28">
 
-                <VerticalStackLayout
-                    Spacing="8">
+                <Grid
+                    ColumnDefinitions="*,Auto"
+                    ColumnSpacing="20">
 
-                    <Label
-                        Text="VIO"
-                        FontSize="13"
-                        FontAttributes="Bold"
-                        TextColor="#DCEEFF" />
-
-                    <Label
-                        Text="Tu perfil profesional, en un solo lugar."
-                        FontSize="24"
-                        FontAttributes="Bold"
-                        TextColor="White" />
-
-                    <Label
-                        Text="Organiza tu CV, certificaciones, proyectos y documentos."
-                        FontSize="14"
-                        TextColor="#EAF5FF" />
-
-                    <Border
-                        Margin="0,10,0,0"
-                        Padding="12,7"
-                        HorizontalOptions="Start"
-                        BackgroundColor="#30FFFFFF"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 12">
+                    <VerticalStackLayout Spacing="10">
 
                         <Label
-                            Text="Perfil en construcción"
-                            FontSize="12"
+                            Text="Tu identidad profesional"
+                            FontSize="25"
                             FontAttributes="Bold"
                             TextColor="White" />
 
+                        <Label
+                            Text="{Binding StatusMessage}"
+                            FontSize="13"
+                            TextColor="#EAF4FF" />
+
+                        <Grid
+                            Margin="0,10,0,0"
+                            ColumnDefinitions="*,Auto"
+                            ColumnSpacing="12">
+
+                            <ProgressBar
+                                Progress="{Binding CompletionProgress}"
+                                ProgressColor="White"
+                                HeightRequest="7"
+                                VerticalOptions="Center" />
+
+                            <Label
+                                Grid.Column="1"
+                                Text="{Binding CompletionText}"
+                                FontSize="12"
+                                FontAttributes="Bold"
+                                TextColor="White" />
+
+                        </Grid>
+
+                    </VerticalStackLayout>
+
+                    <Border
+                        Grid.Column="1"
+                        WidthRequest="68"
+                        HeightRequest="68"
+                        BackgroundColor="#22FFFFFF"
+                        Stroke="#33FFFFFF"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 22">
+
+                        <Label
+                            Text="{Binding CompletionPercentage, StringFormat='{0}%'}"
+                            FontSize="17"
+                            FontAttributes="Bold"
+                            TextColor="White"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center" />
+
                     </Border>
 
-                </VerticalStackLayout>
+                </Grid>
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding GoToCvCommand}" />
+                </Border.GestureRecognizers>
 
             </Border>
 
-
             <Label
-                Margin="0,30,0,14"
+                Margin="0,10,0,0"
                 Text="Tu espacio"
                 Style="{StaticResource VioSectionTitle}" />
 
-
+            <!-- CARDS -->
             <Grid
                 ColumnDefinitions="*,*"
                 RowDefinitions="Auto,Auto"
-                ColumnSpacing="12"
-                RowSpacing="12">
+                ColumnSpacing="10"
+                RowSpacing="10">
 
                 <Border
                     Padding="18"
                     BackgroundColor="White"
                     Stroke="{StaticResource VioBorder}"
-                    StrokeThickness="1"
-                    StrokeShape="RoundRectangle 20">
+                    StrokeShape="RoundRectangle 22">
 
-                    <VerticalStackLayout Spacing="11">
+                    <VerticalStackLayout Spacing="8">
 
                         <Border
-                            WidthRequest="44"
-                            HeightRequest="44"
+                            WidthRequest="46"
+                            HeightRequest="46"
                             HorizontalOptions="Start"
                             BackgroundColor="{StaticResource VioBlueSoft}"
                             StrokeThickness="0"
-                            StrokeShape="RoundRectangle 14">
+                            StrokeShape="RoundRectangle 15">
 
                             <Label
                                 Text="CV"
@@ -155,39 +190,35 @@
                             TextColor="{StaticResource VioTextPrimary}" />
 
                         <Label
-                            Text="Tu trayectoria profesional"
+                            Text="Genera y comparte tu CV"
                             FontSize="12"
-                            TextColor="{StaticResource VioTextTertiary}" />
+                            TextColor="{StaticResource VioTextSecondary}" />
 
                     </VerticalStackLayout>
 
                     <Border.GestureRecognizers>
-
                         <TapGestureRecognizer
                             Command="{Binding GoToCvCommand}" />
-
                     </Border.GestureRecognizers>
 
                 </Border>
-
 
                 <Border
                     Grid.Column="1"
                     Padding="18"
                     BackgroundColor="White"
                     Stroke="{StaticResource VioBorder}"
-                    StrokeThickness="1"
-                    StrokeShape="RoundRectangle 20">
+                    StrokeShape="RoundRectangle 22">
 
-                    <VerticalStackLayout Spacing="11">
+                    <VerticalStackLayout Spacing="8">
 
                         <Border
-                            WidthRequest="44"
-                            HeightRequest="44"
+                            WidthRequest="46"
+                            HeightRequest="46"
                             HorizontalOptions="Start"
-                            BackgroundColor="{StaticResource VioBlueSoft}"
+                            BackgroundColor="#EAF4FF"
                             StrokeThickness="0"
-                            StrokeShape="RoundRectangle 14">
+                            StrokeShape="RoundRectangle 15">
 
                             <Label
                                 Text="PDF"
@@ -202,43 +233,38 @@
                         <Label
                             Text="Documentos"
                             FontSize="17"
-                            FontAttributes="Bold"
-                            TextColor="{StaticResource VioTextPrimary}" />
+                            FontAttributes="Bold" />
 
                         <Label
-                            Text="PDF e imágenes"
+                            Text="{Binding DocumentsCount, StringFormat='{0} archivos guardados'}"
                             FontSize="12"
-                            TextColor="{StaticResource VioTextTertiary}" />
+                            TextColor="{StaticResource VioTextSecondary}" />
 
                     </VerticalStackLayout>
 
                     <Border.GestureRecognizers>
-
                         <TapGestureRecognizer
                             Command="{Binding GoToDocumentsCommand}" />
-
                     </Border.GestureRecognizers>
 
                 </Border>
-
 
                 <Border
                     Grid.Row="1"
                     Padding="18"
                     BackgroundColor="White"
                     Stroke="{StaticResource VioBorder}"
-                    StrokeThickness="1"
-                    StrokeShape="RoundRectangle 20">
+                    StrokeShape="RoundRectangle 22">
 
-                    <VerticalStackLayout Spacing="11">
+                    <VerticalStackLayout Spacing="8">
 
                         <Border
-                            WidthRequest="44"
-                            HeightRequest="44"
+                            WidthRequest="46"
+                            HeightRequest="46"
                             HorizontalOptions="Start"
-                            BackgroundColor="#ECF9EF"
+                            BackgroundColor="#EAF8EE"
                             StrokeThickness="0"
-                            StrokeShape="RoundRectangle 14">
+                            StrokeShape="RoundRectangle 15">
 
                             <Label
                                 Text="✓"
@@ -253,25 +279,21 @@
                         <Label
                             Text="Certificaciones"
                             FontSize="17"
-                            FontAttributes="Bold"
-                            TextColor="{StaticResource VioTextPrimary}" />
+                            FontAttributes="Bold" />
 
                         <Label
-                            Text="Cursos y logros"
+                            Text="{Binding CertificationsCount, StringFormat='{0} registradas'}"
                             FontSize="12"
-                            TextColor="{StaticResource VioTextTertiary}" />
+                            TextColor="{StaticResource VioTextSecondary}" />
 
                     </VerticalStackLayout>
 
                     <Border.GestureRecognizers>
-
                         <TapGestureRecognizer
                             Command="{Binding GoToCertificationsCommand}" />
-
                     </Border.GestureRecognizers>
 
                 </Border>
-
 
                 <Border
                     Grid.Row="1"
@@ -279,24 +301,23 @@
                     Padding="18"
                     BackgroundColor="White"
                     Stroke="{StaticResource VioBorder}"
-                    StrokeThickness="1"
-                    StrokeShape="RoundRectangle 20">
+                    StrokeShape="RoundRectangle 22">
 
-                    <VerticalStackLayout Spacing="11">
+                    <VerticalStackLayout Spacing="8">
 
                         <Border
-                            WidthRequest="44"
-                            HeightRequest="44"
+                            WidthRequest="46"
+                            HeightRequest="46"
                             HorizontalOptions="Start"
-                            BackgroundColor="#F2EEFF"
+                            BackgroundColor="#F2EDFF"
                             StrokeThickness="0"
-                            StrokeShape="RoundRectangle 14">
+                            StrokeShape="RoundRectangle 15">
 
                             <Label
                                 Text="ID"
                                 FontSize="12"
                                 FontAttributes="Bold"
-                                TextColor="#7C5CFC"
+                                TextColor="#7657E8"
                                 HorizontalTextAlignment="Center"
                                 VerticalTextAlignment="Center" />
 
@@ -305,75 +326,86 @@
                         <Label
                             Text="Mi perfil"
                             FontSize="17"
-                            FontAttributes="Bold"
-                            TextColor="{StaticResource VioTextPrimary}" />
+                            FontAttributes="Bold" />
 
                         <Label
-                            Text="Datos y configuración"
+                            Text="{Binding SkillsCount, StringFormat='{0} habilidades'}"
                             FontSize="12"
-                            TextColor="{StaticResource VioTextTertiary}" />
+                            TextColor="{StaticResource VioTextSecondary}" />
 
                     </VerticalStackLayout>
 
                     <Border.GestureRecognizers>
-
                         <TapGestureRecognizer
                             Command="{Binding GoToProfileCommand}" />
-
                     </Border.GestureRecognizers>
 
                 </Border>
 
             </Grid>
 
-
+            <!-- RESUMEN -->
             <Label
-                Text="Actividad reciente"
-                Margin="0,30,0,14"
+                Margin="0,10,0,0"
+                Text="Resumen"
                 Style="{StaticResource VioSectionTitle}" />
 
-
             <Border
-                Padding="18"
+                Padding="20"
                 BackgroundColor="White"
                 Stroke="{StaticResource VioBorder}"
-                StrokeThickness="1"
-                StrokeShape="RoundRectangle 20">
+                StrokeShape="RoundRectangle 22">
 
                 <Grid
-                    ColumnDefinitions="Auto,*"
-                    ColumnSpacing="14">
+                    ColumnDefinitions="*,*,*"
+                    ColumnSpacing="8">
 
-                    <Border
-                        WidthRequest="42"
-                        HeightRequest="42"
-                        BackgroundColor="{StaticResource VioBlueSoft}"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 13">
+                    <VerticalStackLayout
+                        HorizontalOptions="Center">
 
                         <Label
-                            Text="V"
-                            FontSize="16"
+                            Text="{Binding ExperienceCount}"
+                            FontSize="22"
                             FontAttributes="Bold"
-                            TextColor="{StaticResource VioBlue}"
-                            HorizontalTextAlignment="Center"
-                            VerticalTextAlignment="Center" />
+                            TextColor="{StaticResource VioBlue}" />
 
-                    </Border>
+                        <Label
+                            Text="Experiencias"
+                            FontSize="10"
+                            TextColor="{StaticResource VioTextSecondary}" />
+
+                    </VerticalStackLayout>
 
                     <VerticalStackLayout
                         Grid.Column="1"
-                        Spacing="2">
+                        HorizontalOptions="Center">
 
                         <Label
-                            Text="Bienvenido a VIO"
-                            FontSize="15"
+                            Text="{Binding SkillsCount}"
+                            FontSize="22"
                             FontAttributes="Bold"
-                            TextColor="{StaticResource VioTextPrimary}" />
+                            TextColor="{StaticResource VioBlue}" />
 
                         <Label
-                            Text="Empieza completando tu perfil profesional."
-                            FontSize="13"
+                            Text="Habilidades"
+                            FontSize="10"
+                            TextColor="{StaticResource VioTextSecondary}" />
+
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Grid.Column="2"
+                        HorizontalOptions="Center">
+
+                        <Label
+                            Text="{Binding CertificationsCount}"
+                            FontSize="22"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource VioBlue}" />
+
+                        <Label
+                            Text="Certificados"
+                            FontSize="10"
                             TextColor="{StaticResource VioTextSecondary}" />
 
                     </VerticalStackLayout>
@@ -382,12 +414,11 @@
 
             </Border>
 
-
             <Label
-                Margin="0,30,0,0"
+                Margin="0,12"
                 Text="VIO · Verified Identity &amp; Opportunities"
+                FontSize="10"
                 HorizontalTextAlignment="Center"
-                FontSize="11"
                 TextColor="{StaticResource VioTextTertiary}" />
 
         </VerticalStackLayout>
