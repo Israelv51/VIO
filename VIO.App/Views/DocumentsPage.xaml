@@ -176,6 +176,16 @@
                                             CommandParameter="{Binding .}" />
 
                                         <Button
+                                            Text="•••"
+                                            FontSize="13"
+                                            Padding="9,5"
+                                            CornerRadius="10"
+                                            BackgroundColor="{StaticResource VioBlueSoft}"
+                                            TextColor="{StaticResource VioBlue}"
+                                            Command="{Binding Source={x:Reference Page}, Path=BindingContext.DetailsCommand}"
+                                            CommandParameter="{Binding .}" />
+
+                                        <Button
                                             Text="×"
                                             FontSize="16"
                                             Padding="9,5"
@@ -261,6 +271,7 @@
     </Grid>
 
 </ContentPage>
+
 
 
 

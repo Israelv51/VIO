@@ -36,7 +36,17 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(
             AppRoutes.DocumentScanner,
             typeof(DocumentScannerPage));
+
+        Routing.RegisterRoute(
+            AppRoutes.CvPreview,
+            typeof(CvPreviewPage));
+
+        Routing.RegisterRoute(
+            AppRoutes.ProfilePhotoEditor,
+            typeof(ProfilePhotoEditorPage));
+
+        Routing.RegisterRoute(
+            AppRoutes.DocumentDetails,
+            typeof(DocumentDetailsPage));
     }
 }
-
-
